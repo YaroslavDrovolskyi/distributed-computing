@@ -17,14 +17,45 @@ public class ProgramA {
 class WindowA{
     private Thread th1;
     private Thread th2;
+    private JFrame window;
+    private JSlider slider;
+    private JSpinner spinnerTh1;
+    private JSpinner spinnerTh2;
+    private JButton buttonStart;
+
     WindowA(){
-        JFrame win = new JFrame("Window");
-        win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        win.setSize(1400,500);
+        initUi();
+
+        // add event listener for
+        buttonStart.addActionListener(
+            (ActionEvent e) -> {
+                if (th1 != null){
+                    return;
+                }
+                this.th1 = new Thread(new ThreadChangeSliderValue(slider, 10));
+                this.th2 = new Thread(new ThreadChangeSliderValue(slider, 90));
+
+                spinnerTh1.setValue(5);
+                spinnerTh2.setValue(5);
+
+                spinnerTh1.addChangeListener(new SpinnerValueChangedListener(spinnerTh1, this.th1));
+                spinnerTh2.addChangeListener(new SpinnerValueChangedListener(spinnerTh2, this.th2));
+
+                th1.start();
+                th2.start();
+            });
+    }
+
+
+
+    private void initUi(){
+        this.window = new JFrame("Window");
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setSize(1400,500);
 
 
         // build slider
-        JSlider slider = new JSlider(0,100,50);
+        this.slider = new JSlider(0,100,50);
         slider.setMajorTickSpacing(10);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
@@ -34,12 +65,12 @@ class WindowA{
         slider.setPreferredSize(new Dimension(300, 100));
 
         // build spinners
-        JSpinner spinner1 = new JSpinner(new SpinnerNumberModel(5, 1, 10, 1));
-        JSpinner spinner2 = new JSpinner(new SpinnerNumberModel(5, 1, 10, 1));
-        spinner1.setPreferredSize(new Dimension(100, 50));
-        spinner2.setPreferredSize(new Dimension(100, 50));
+        this.spinnerTh1 = new JSpinner(new SpinnerNumberModel(5, 1, 10, 1));
+        this.spinnerTh2 = new JSpinner(new SpinnerNumberModel(5, 1, 10, 1));
+        spinnerTh1.setPreferredSize(new Dimension(100, 50));
+        spinnerTh2.setPreferredSize(new Dimension(100, 50));
 
-        JButton button = new JButton("Start!");
+        this.buttonStart = new JButton("Start!");
 
         // make layout
         JPanel panelMain = new JPanel();
@@ -53,41 +84,17 @@ class WindowA{
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
-        panelMain.add(spinner1, c);
+        panelMain.add(spinnerTh1, c);
         c.gridx = 1;
         c.gridy = 1;
-        panelMain.add(spinner2, c);
+        panelMain.add(spinnerTh2, c);
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 2;
-        panelMain.add(button, c);
+        panelMain.add(buttonStart, c);
 
-        win.setContentPane(panelMain);
-        win.setVisible(true);
-
-        // add event listener for
-        button.addActionListener(
-            (ActionEvent e) -> {
-                if (th1 != null){
-                    return;
-                }
-                this.th1 = new Thread(new ThreadChangeSliderValue(slider, 10));
-                this.th2 = new Thread(new ThreadChangeSliderValue(slider, 90));
-
-                spinner1.setValue(5);
-                spinner2.setValue(5);
-
-                spinner1.addChangeListener(new SpinnerValueChangedListener(spinner1, this.th1));
-                spinner2.addChangeListener(new SpinnerValueChangedListener(spinner2, this.th2));
-
-                th1.start();
-                th2.start();
-            });
-
-
-
-
-
+        window.setContentPane(panelMain);
+        window.setVisible(true);
     }
 }
 
@@ -101,24 +108,21 @@ class ThreadChangeSliderValue implements Runnable{
     }
     @Override
     public void run() {
-        while(true){
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-//            synchronized (slider){
-                for (int i = 0; i < 10; i++){
-                    synchronized (slider){
-                        int curValue = (int) (slider.getValue());
-                        int valueToSet = this.value == 10 ? --curValue : ++curValue;
-                        valueToSet = putInBounds(valueToSet, 10, 90);
-                        slider.setValue(valueToSet);
-                    }
+        while(Thread.interrupted() == false){ // do while thread isn't interrupted
+            synchronized (slider){
+                int curValue = (int) (slider.getValue()); // increment or decrement slider
+                int newValue = this.value == 10 ? --curValue : ++curValue;
+                newValue = putInBounds(newValue, 10, 90);
+                slider.setValue(newValue);
+
+                // sleep for 10 msec
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
-                slider.setValue(value);
-                System.out.println("Changed value to " + value);
- //           }
+                System.out.println("Changed slider value to " + newValue);
+            }
         }
     }
 
@@ -151,7 +155,7 @@ class SpinnerValueChangedListener implements ChangeListener {
                 if (newPriority >= 1 && newPriority <= 10){
                     if (this.thread != null){
                         this.thread.setPriority(newPriority);
-                        System.out.println("Changed priority to " + newPriority);
+                        System.out.println("Changed priority for " + this.thread.toString() + " to " + newPriority);
                     }
                     else{
                         ((JSpinner) source).setValue(1);
@@ -161,7 +165,8 @@ class SpinnerValueChangedListener implements ChangeListener {
 
             }
             else{
-                ((JSpinner) source).setValue(1);
+                ((JSpinner) source).setValue(5);
+                this.thread.setPriority(5);
             }
         }
     }
