@@ -1,7 +1,6 @@
 package ua.edu.yarik;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
@@ -15,6 +14,7 @@ public class ProgramA {
 }
 
 class WindowA{
+    private boolean isStarted = false;
     private Thread th1;
     private Thread th2;
     private JFrame window;
@@ -24,12 +24,12 @@ class WindowA{
     private JButton buttonStart;
 
     WindowA(){
-        initUi();
+        setupUi();
 
         // add event listener for
         buttonStart.addActionListener(
             (ActionEvent e) -> {
-                if (th1 != null){
+                if (isStarted){
                     return;
                 }
                 this.th1 = new Thread(new ThreadChangeSliderValue(slider, 10));
@@ -43,15 +43,17 @@ class WindowA{
 
                 th1.start();
                 th2.start();
+                isStarted = true;
             });
     }
 
 
 
-    private void initUi(){
-        this.window = new JFrame("Window");
+    private void setupUi(){
+        this.window = new JFrame("Lab 1a");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(1400,500);
+        window.setSize(400,400);
+        window.setLocation(new Point(500, 200));
 
 
         // build slider
@@ -119,7 +121,9 @@ class ThreadChangeSliderValue implements Runnable{
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                //    throw new RuntimeException(e);
+                    System.out.println("Interrupted thread during sleep()");
+                    break;
                 }
                 System.out.println("Changed slider value to " + newValue);
             }
