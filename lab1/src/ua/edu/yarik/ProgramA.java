@@ -26,7 +26,7 @@ class WindowA{
     WindowA(){
         setupUi();
 
-        // add event listener for
+        // add event listener for button "Start"
         buttonStart.addActionListener(
             (ActionEvent e) -> {
                 if (isStarted){
@@ -40,6 +40,9 @@ class WindowA{
 
                 spinnerTh1.addChangeListener(new SpinnerValueChangedListener(spinnerTh1, this.th1));
                 spinnerTh2.addChangeListener(new SpinnerValueChangedListener(spinnerTh2, this.th2));
+
+                th1.setDaemon(true);
+                th2.setDaemon(true);
 
                 th1.start();
                 th2.start();
