@@ -20,7 +20,7 @@ public class BeeThread implements Runnable{
                 return;
             }
 
-            System.out.println(LocalDateTime.now() + " " + Thread.currentThread().getName() + " got task " + rowNumber);
+            System.out.println(/*LocalDateTime.now() + " "+*/ Thread.currentThread().getName() + " got task " + rowNumber);
             try {
                 Thread.sleep(1000); // look for a bear
                 boolean result = false;
@@ -30,7 +30,7 @@ public class BeeThread implements Runnable{
                 }
                 if (result){
                     Thread.sleep(2000); // punish the bear
-                    System.out.println(LocalDateTime.now() + " "+ Thread.currentThread().getName() + " found bear at row " + rowNumber);
+                    System.out.println(/*LocalDateTime.now() + " "+*/ Thread.currentThread().getName() + " found bear at row " + rowNumber);
                 }
                 manager.sendResult(result);
 

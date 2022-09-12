@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51048539-09e3-459a-b592-81aff647c2ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/ConsumerThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/ItemsBuffer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/MediatorThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/ProducerThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ua/edu/yarik/task_a/BeeThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_a/BeeThread.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +28,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2EfW5ftQ6liucJxbAccc1kpf01T" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
