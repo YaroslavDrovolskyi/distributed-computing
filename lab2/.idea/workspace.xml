@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51048539-09e3-459a-b592-81aff647c2ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/ConsumerThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/ItemsBuffer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/MediatorThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_b/ProducerThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ua/edu/yarik/task_a/BeeThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ua/edu/yarik/task_a/BeeThread.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
