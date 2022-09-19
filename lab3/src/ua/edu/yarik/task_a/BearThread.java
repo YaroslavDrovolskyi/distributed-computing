@@ -1,19 +1,21 @@
 package ua.edu.yarik.task_a;
 
 public class BearThread implements Runnable{
-    private Semaphore semaphore;
+    private Semaphore myInvoker;
+    private Semaphore beesInvoker;
     private HoneyPot honeyPot;
 
-    public BearThread(HoneyPot honeyPot, Semaphore semaphore){
+    public BearThread(HoneyPot honeyPot, Semaphore myInvoker, Semaphore beesInvoker){
         this.honeyPot = honeyPot;
-        this.semaphore = semaphore;
+        this.myInvoker = myInvoker;
+        this.beesInvoker = beesInvoker;
     }
 
 
     @Override
     public void run() {
         while(!Thread.interrupted()){
-            semaphore.acquire();
+            myInvoker.acquire();
             synchronized (honeyPot){
                 if(honeyPot.isFull()){
                     eatHoney(); // sleep 5s
@@ -22,7 +24,7 @@ public class BearThread implements Runnable{
                     System.out.println("Bear tried eat honey, but pot isn't full");
                 }
             }
-//            semaphore.release();
+            beesInvoker.release(); // invoke bees
         }
     }
 

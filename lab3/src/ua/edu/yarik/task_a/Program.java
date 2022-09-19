@@ -7,7 +7,7 @@ public class Program {
         HoneyPot pot = new HoneyPot(10);
 
         // create threads
-        Thread bear = new Thread(new BearThread(pot, bearInvoker));
+        Thread bear = new Thread(new BearThread(pot, bearInvoker, beeSemaphore));
 //        bear.setDaemon(true);
         Thread[] bees = new Thread[4];
 

@@ -19,18 +19,28 @@ public class BeeThread implements Runnable{
             if (!haveHoney){
                 obtainHoney(); // sleep 1s
             }
+            boolean isLast = false;
 
             semaphore.acquire();
             synchronized (honeyPot){
                 if (!honeyPot.isFull()){
                     putHoney(); // sleep 1.5s
                     if (honeyPot.isFull()){
-                        bearInvoker.release(); // it will invoke bear
-                        System.out.println(Thread.currentThread().getName() + " invoked Bear");
+                        isLast = true;
                     }
                 }
             }
-            semaphore.release();
+            /*
+                If it is last bee, then we don't release. It will make bear after eating honey
+             */
+            if (isLast){
+                System.out.println(Thread.currentThread().getName() + " invoked Bear");
+                bearInvoker.release(); // it will invoke bear
+            }
+            else {
+                semaphore.release();
+            }
+
 
         }
     }
