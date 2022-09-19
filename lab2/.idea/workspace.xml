@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51048539-09e3-459a-b592-81aff647c2ab" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../lab3/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/lab3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_a/BearThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_a/BeeThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_a/HoneyPot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_a/Program.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_a/Semaphore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lab3/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_b/ClientThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_b/HairdresserThread.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../lab3/src/ua/edu/yarik/task_b/Program.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
