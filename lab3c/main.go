@@ -102,7 +102,7 @@ func main() {
 }
 
 /*
-	I used channels [and passing value over it] as a semaphore:
+	I used channels as a semaphore:
  	 - getting value from channel means semaphore.acquire()
 	 - putting value in channel means semaphore.release()
 */
