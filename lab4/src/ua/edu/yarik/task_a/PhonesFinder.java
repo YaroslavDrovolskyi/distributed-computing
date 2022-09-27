@@ -8,13 +8,15 @@ import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 public class PhonesFinder implements Callable<List<PhoneNumber>> {
+    private String threadName;
     private String filepath;
     private String nameToFind;
     private MyReentrantReadWriteLock lock;
 
-    public PhonesFinder(String filepath, String name, MyReentrantReadWriteLock lock){
+    public PhonesFinder(String threadName, String filepath, String nameToFind, MyReentrantReadWriteLock lock){
+        this.threadName = threadName;
         this.filepath = filepath;
-        this.nameToFind = name;
+        this.nameToFind = nameToFind;
         this.lock = lock;
     }
 
@@ -23,6 +25,7 @@ public class PhonesFinder implements Callable<List<PhoneNumber>> {
         List<PhoneNumber> result = new LinkedList<>();
 
         lock.readLock();
+        System.out.println(threadName + " started reading");
         Scanner scanner = new Scanner(new File(filepath));
 
         int currentLineIndex = -1;
@@ -30,22 +33,22 @@ public class PhonesFinder implements Callable<List<PhoneNumber>> {
         while(scanner.hasNextLine()){
             currentLineIndex++;
 
-            String line = scanner.nextLine(); // read line without a '\n'
-            String[] lineComponents = line.split(":");
-            if (lineComponents.length != 2){
-                throw new IllegalArgumentException(
-                        "Illegal format of a line index " + currentLineIndex);
-            }
-
-            String name = lineComponents[0].toLowerCase(Locale.ENGLISH);
-            String phone = lineComponents[1];
-            if (nameToFind.equals(name)){
-                result.add(new PhoneNumber(phone));
+            String inputLine = scanner.nextLine(); // read line without a '\n'
+            String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
+            // [0]-is name, [1] is phone number
+            if (nameToFind.equals(lineItems[0])){
+                result.add(new PhoneNumber(lineItems[1]));
             }
         }
+        Thread.sleep(1000);
         scanner.close();
+        System.out.println(threadName + " finished reading");
         lock.readUnlock();
 
         return result;
+    }
+
+    public void setNameToFind(String nameToFind){
+        this.nameToFind = nameToFind;
     }
 }
