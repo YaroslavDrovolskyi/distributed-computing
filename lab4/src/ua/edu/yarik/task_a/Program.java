@@ -43,8 +43,6 @@ public class Program {
 
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
-
-
         try {
 
             executor.submit(writer1);
@@ -68,23 +66,9 @@ public class Program {
             executor.submit(remover3);
             Thread.sleep(5000);
 
-
-//            Thread.sleep(60000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        executor.shutdown();
-
-        /*
-        FileRecordsRemover remover = new FileRecordsRemover("remover", filepath, new MyReentrantReadWriteLock(),
-                "name1001");
-
-        try {
-            remover.call();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        */
     }
 
 

@@ -27,42 +27,47 @@ public class FileRecordsRemover implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        lock.writeLock();
-        System.out.println(threadName + " started removing");
+        int deletedLinesCount = 0;
+        int currentLineIndex = -1;
+        try{
+            lock.writeLock();
+            System.out.println(threadName + " started removing");
 
-        File file = new File(filepath);
-        File tempFile = new File(tempFilePath);
+            File file = new File(filepath);
+            File tempFile = new File(tempFilePath);
 
-        Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(file.toPath(), tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        Scanner tempFileReader = new Scanner(tempFile);
-        PrintWriter out = new PrintWriter(file);
+            Scanner tempFileReader = new Scanner(tempFile);
+            PrintWriter out = new PrintWriter(file);
 
         /* we will read temp file, and write into our file only records,
            that we don't need to delete
         */
-        int deletedLinesCount = 0;
-        int currentLineIndex = -1;
-        while(tempFileReader.hasNextLine()){
-            currentLineIndex++;
-            String inputLine =  tempFileReader.nextLine();
-            String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
-            String name = lineItems[0];
 
-            if (!name.equals(nameToDelete)){
-                out.println(inputLine);
+            while(tempFileReader.hasNextLine()){
+                currentLineIndex++;
+                String inputLine =  tempFileReader.nextLine();
+                String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
+                String name = lineItems[0];
+
+                if (!name.equals(nameToDelete)){
+                    out.println(inputLine);
+                }
+                else{
+                    deletedLinesCount++;
+                }
             }
-            else{
-                deletedLinesCount++;
-            }
+            tempFileReader.close();
+            out.close();
+
+            tempFile.delete();
+            Thread.sleep(3000);
         }
-        tempFileReader.close();
-        out.close();
-
-        tempFile.delete();
-        Thread.sleep(3000);
-        System.out.println(threadName + " finished removing");
-        lock.writeUnlock();
+        finally{
+            System.out.println(threadName + " finished removing");
+            lock.writeUnlock();
+        }
 
         return deletedLinesCount;
     }

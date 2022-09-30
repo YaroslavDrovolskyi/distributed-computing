@@ -24,21 +24,26 @@ public class FileRecordsWriter implements Callable<Integer> {
     public Integer call() throws Exception {
         int wroteLinesCount = 0;
 
-        lock.writeLock();
-        System.out.println(threadName + " started writing");
+        try{
+            lock.writeLock();
+            System.out.println(threadName + " started writing");
 
-        FileWriter fw = new FileWriter(filepath, true);
-        BufferedWriter bw = new BufferedWriter(fw);
-        PrintWriter out = new PrintWriter(bw);
+            FileWriter fw = new FileWriter(filepath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw);
 
-        for (String currentLine : linesToWrite){
-            out.println(currentLine);
-            wroteLinesCount++;
+            for (String currentLine : linesToWrite){
+                out.println(currentLine);
+                wroteLinesCount++;
+            }
+            out.close();
+            Thread.sleep(2000);
+
         }
-        Thread.sleep(2000);
-        out.close();
-        System.out.println(threadName + " finished writing");
-        lock.writeUnlock();
+        finally{
+            System.out.println(threadName + " finished writing");
+            lock.writeUnlock();
+        }
 
         return wroteLinesCount;
     }

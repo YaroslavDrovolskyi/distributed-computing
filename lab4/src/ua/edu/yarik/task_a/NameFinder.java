@@ -22,25 +22,31 @@ public class NameFinder implements Callable<String> {
     public String call() throws Exception {
         String result = null;
 
-        lock.readLock();
-        System.out.println(threadName + " started reading");
-        Scanner scanner = new Scanner(new File(filepath));
 
-        int currentLineIndex = -1;
-        while(scanner.hasNextLine()){
-            currentLineIndex++;
+        try{
+            lock.readLock();
+            System.out.println(threadName + " started reading");
+            Scanner scanner = new Scanner(new File(filepath));
 
-            String inputLine = scanner.nextLine(); // read line without a '\n'
-            String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
-            if (phoneNumberToFind.equals(new PhoneNumber(lineItems[1]))){
-                result = lineItems[0];
-                break;
+            int currentLineIndex = -1;
+            while(scanner.hasNextLine()){
+                currentLineIndex++;
+
+                String inputLine = scanner.nextLine(); // read line without a '\n'
+                String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
+                if (phoneNumberToFind.equals(new PhoneNumber(lineItems[1]))){
+                    result = lineItems[0];
+                    break;
+                }
             }
+            scanner.close();
+            Thread.sleep(1000);
+
         }
-        Thread.sleep(1000);
-        scanner.close();
-        System.out.println(threadName + " finished reading");
-        lock.readUnlock();
+        finally{
+            System.out.println(threadName + " finished reading");
+            lock.readUnlock();
+        }
 
         return result;
     }

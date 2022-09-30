@@ -17,14 +17,14 @@ public class Program {
 
         try {
             nature.start();
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
 
             gardener.start();
 
             consolePrinter.start();
 
             filePrinter.start();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 

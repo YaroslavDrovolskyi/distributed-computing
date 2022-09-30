@@ -24,26 +24,30 @@ public class PhonesFinder implements Callable<List<PhoneNumber>> {
     public List<PhoneNumber> call() throws Exception {
         List<PhoneNumber> result = new LinkedList<>();
 
-        lock.readLock();
-        System.out.println(threadName + " started reading");
-        Scanner scanner = new Scanner(new File(filepath));
+        try{
+            lock.readLock();
+            System.out.println(threadName + " started reading");
+            Scanner scanner = new Scanner(new File(filepath));
 
-        int currentLineIndex = -1;
+            int currentLineIndex = -1;
 
-        while(scanner.hasNextLine()){
-            currentLineIndex++;
+            while(scanner.hasNextLine()){
+                currentLineIndex++;
 
-            String inputLine = scanner.nextLine(); // read line without a '\n'
-            String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
-            // [0]-is name, [1] is phone number
-            if (nameToFind.equals(lineItems[0])){
-                result.add(new PhoneNumber(lineItems[1]));
+                String inputLine = scanner.nextLine(); // read line without a '\n'
+                String[] lineItems = FileRecordParser.parseInputLine(inputLine, currentLineIndex);
+                // [0]-is name, [1] is phone number
+                if (nameToFind.equals(lineItems[0])){
+                    result.add(new PhoneNumber(lineItems[1]));
+                }
             }
+            scanner.close();
+            Thread.sleep(1000);
         }
-        Thread.sleep(1000);
-        scanner.close();
-        System.out.println(threadName + " finished reading");
-        lock.readUnlock();
+        finally{
+            System.out.println(threadName + " finished reading");
+            lock.readUnlock();
+        }
 
         return result;
     }

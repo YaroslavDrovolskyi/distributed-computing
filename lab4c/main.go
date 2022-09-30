@@ -291,23 +291,4 @@ func main() {
 	go RemoveCitiesThread(tg, &lock)
 
 	<-waiting_buffer
-	tg.addCity("A")
-	tg.addCity("B")
-	tg.addCity("C")
-
-	tg.addEdge("A", "B", 2435)
-	tg.addEdge("A", "C", 324)
-	fmt.Println(tg)
-
-	tg.removeCity("B")
-	fmt.Println(tg)
-
-	tg.addCity("D")
-	tg.addCity("M")
-	tg.addCity("N")
-	tg.addCity("K")
-	tg.addCity("K")
-	fmt.Println(tg)
-
-	//	tg := newTransportGraph()
 }
