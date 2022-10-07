@@ -29,8 +29,8 @@ public class Manager implements Runnable{
         return result;
     }
 
-    public String getString(int index){
-        return strings[index];
+    public String getString(int threadId){
+        return strings[threadId];
     }
 
     // method is not sync, because threads will address to different sells of array

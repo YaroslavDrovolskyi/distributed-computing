@@ -2,10 +2,10 @@ package ua.edu.yarik.task_a;
 
 public class RecruitLineThread implements Runnable{
     Direction[] recruitsDirection;
-    MyBarrier barrier;
+    MyCyclicBarrier barrier;
 
 
-    public RecruitLineThread(int n, MyBarrier barrier){
+    public RecruitLineThread(int n, MyCyclicBarrier barrier){
         this.barrier = barrier;
         this.recruitsDirection = new Direction[n];
 
@@ -42,11 +42,14 @@ public class RecruitLineThread implements Runnable{
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("Stabilized after " + iterationsCount + " iterations");
+        System.out.println(Thread.currentThread().getName() +
+                ": stabilized after " + iterationsCount + " iterations");
 
         try {
             System.out.println(Thread.currentThread().getName() + " arrived to barrier");
             barrier.await();
+
+            System.out.println(Thread.currentThread().getName() + " finished");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

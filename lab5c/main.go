@@ -57,7 +57,9 @@ func arrayThread(id int, arrays [][]int, barrier *CyclicBarrier, wg *sync.WaitGr
 		myArraySum := calcSum(arrays[id])
 		needContinue := checkSumsEqual(id, myArraySum, arrays)
 
-		fmt.Println("id =", id, "\t", arrays[id], "\tsum =", myArraySum, "\tneed continue = ", needContinue)
+		//		fmt.Println("id =", id, "\t", arrays[id], "\tsum =", myArraySum, "\tneed continue = ", needContinue)
+
+		fmt.Println("Thread", id, "\tfinished comparing sums,  \tneed continue = ", needContinue)
 		barrier.await()
 
 		if needContinue {
@@ -66,7 +68,8 @@ func arrayThread(id int, arrays [][]int, barrier *CyclicBarrier, wg *sync.WaitGr
 			// decrement or increment item in array
 			possibleDelta := []int{-1, 1}
 			arrays[id][i] += possibleDelta[rand.Intn(len(possibleDelta))]
-			fmt.Println()
+
+			fmt.Println("Thread", id, "\tfinished current iteration")
 			barrier.await()
 		} else {
 			wg.Done()
