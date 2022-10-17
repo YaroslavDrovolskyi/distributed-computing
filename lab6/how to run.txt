@@ -1,0 +1,2 @@
+mpiexec -n 16 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
+Якщо без -n, то за замовчуванням запустить програму на всіх логічних ядрах
