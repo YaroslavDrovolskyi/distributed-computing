@@ -13,6 +13,10 @@ public class Author {
         return id;
     }
 
+    public String getName(){
+        return name;
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

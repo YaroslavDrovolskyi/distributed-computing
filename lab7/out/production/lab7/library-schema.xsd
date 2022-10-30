@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified"  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!--  xmlns:xs="http://www.w3.org/2001/XMLSchema" -->
+    <xsd:element name="Library">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Author" type="Author" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="Author">
+        <xsd:sequence>
+            <xsd:element name="Book" type="Book" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="authorId" use="required"></xsd:attribute>
+        <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="Book">
+        <xsd:attribute name="id" type="bookId" use="required"></xsd:attribute>
+        <xsd:attribute name="title" type="xsd:string" use="required"></xsd:attribute>
+        <xsd:attribute name="year" type="xsd:positiveInteger" use="required"></xsd:attribute>
+        <xsd:attribute name="numberOfPages" type="xsd:positiveInteger" use="required"></xsd:attribute>
+    </xsd:complexType>
+
+
+    <xsd:simpleType name="authorId">
+        <xsd:restriction base="xsd:ID">
+            <xsd:pattern value="id-[0-9]+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="bookId">
+        <xsd:restriction base="xsd:ID">
+            <xsd:pattern value="isbn-[0-9]+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

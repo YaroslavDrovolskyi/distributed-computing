@@ -1,7 +1,27 @@
 package ua.edu.yarik;
 
+import ua.edu.yarik.builders.LibraryFromXmlBuilder;
+
+import java.io.File;
+
 public class Program {
     public static void main(String args[]){
+        File f = new File("resources/library.xml");
+        LibraryFromXmlBuilder builder = new LibraryFromXmlBuilder(f.getPath(), "resources/library-schema.xsd");
+
+        Library library = builder.build();
+        library.print();
+
+        library.saveInFile("resources/library-output.xml");
+
+        demo1();
+
+
+
+
+    }
+
+    private static void demo1(){
         System.out.println("Add authors:");
         Library library = new Library();
         for(int i = 1; i <= 10; i++){
@@ -80,6 +100,10 @@ public class Program {
             System.out.println("Book does not exist");
         }
 
+        library.saveInFile("resources/demo1-output.xml");
 
+        LibraryFromXmlBuilder builder1 = new LibraryFromXmlBuilder("resources/demo1-output.xml", "resources/library-schema.xsd");
+        Library libr = builder1.build();
+        libr.print();
     }
 }

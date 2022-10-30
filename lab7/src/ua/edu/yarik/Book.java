@@ -23,6 +23,18 @@ public class Book {
         return author;
     }
 
+    public String getTitle(){
+        return title;
+    }
+
+    public int getYear(){
+        return year;
+    }
+
+    public int getNumberPages(){
+        return numberOfPages;
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
