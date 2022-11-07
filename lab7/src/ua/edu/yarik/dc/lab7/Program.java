@@ -1,11 +1,14 @@
-package ua.edu.yarik;
+package ua.edu.yarik.dc.lab7;
 
-import ua.edu.yarik.builders.LibraryFromXmlBuilder;
+import ua.edu.yarik.dc.lab7.builders.LibraryFromXmlBuilder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class Program {
     public static void main(String args[]){
+        /*
         File f = new File("resources/library.xml");
         LibraryFromXmlBuilder builder = new LibraryFromXmlBuilder(f.getPath(), "resources/library-schema.xsd");
 
@@ -15,10 +18,18 @@ public class Program {
         library.saveInFile("resources/library-output.xml");
 
         demo1();
+        */
 
 
-
-
+        try {
+            LibraryDB db = new LibraryDB();
+            db.addAuthor(200, "Author-2");
+            db.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (SQLException e) {
+            System.out.println("SQL error occurred: " + e.getMessage());
+        }
     }
 
     private static void demo1(){

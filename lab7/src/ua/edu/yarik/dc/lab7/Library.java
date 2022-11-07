@@ -1,4 +1,4 @@
-package ua.edu.yarik;
+package ua.edu.yarik.dc.lab7;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

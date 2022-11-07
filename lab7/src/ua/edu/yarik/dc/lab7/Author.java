@@ -1,4 +1,4 @@
-package ua.edu.yarik;
+package ua.edu.yarik.dc.lab7;
 
 public class Author {
     private long id;
