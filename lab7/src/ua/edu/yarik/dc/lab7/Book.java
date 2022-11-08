@@ -15,6 +15,22 @@ public class Book {
         this.author = author;
     }
 
+    public void setTitle(String title){
+        this.title = title;
+    }
+
+    public void setYear(int year){
+        this.year = year;
+    }
+
+    public void setNumberOfPages(int pages){
+        this.numberOfPages = pages;
+    }
+
+    public void setAuthor(Author author){
+        this.author = author;
+    }
+
     public long getISBN(){
         return isbn;
     }

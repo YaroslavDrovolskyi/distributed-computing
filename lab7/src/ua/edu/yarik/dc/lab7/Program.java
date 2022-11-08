@@ -20,16 +20,41 @@ public class Program {
         demo1();
         */
 
-
+        LibraryDB db = null;
         try {
-            LibraryDB db = new LibraryDB();
-            db.addAuthor(200, "Author-2");
-            db.close();
+            db = new LibraryDB();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (SQLException e) {
             System.out.println("SQL error occurred: " + e.getMessage());
         }
+
+        System.out.println("Truncate tables: " + db.deleteAllAuthors() + ", " + db.deleteAllBooks());
+
+        System.out.println("Add authors");
+        System.out.println(db.addAuthor(250, "Author-3"));
+        System.out.println(db.addAuthor(251, "Author-4"));
+        System.out.println(db.addAuthor(252, "Author-5"));
+        System.out.println(db.addAuthor(253, "Author-6"));
+        System.out.println(db.addAuthor(254, "Author-7"));
+        System.out.println("Add existing author: " + db.addAuthor(250, "Author-7"));
+
+        System.out.println("Add books");
+        System.out.println(db.addBook(1000, "Book-1", 2005, 100, 250));
+        System.out.println(db.addBook(1001, "Book-2", 2005, 100, 251));
+        System.out.println(db.addBook(1002, "Book-3", 2005, 100, 252));
+        System.out.println("Add exist book: " + db.addBook(1000, "Book-4", 2005, 100, 250));
+        System.out.println("Add book of non-existent author: "+ db.addBook(1004, "Book-5", 2005, 100, 1000));
+
+
+        try {
+            db.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+//        demo1();
     }
 
     private static void demo1(){
@@ -111,7 +136,7 @@ public class Program {
             System.out.println("Book does not exist");
         }
 
-        library.saveInFile("resources/demo1-output.xml");
+        LibraryWriterXML.saveLibraryInFile(library, "resources/demo1-output.xml");
 
         LibraryFromXmlBuilder builder1 = new LibraryFromXmlBuilder("resources/demo1-output.xml", "resources/library-schema.xsd");
         Library libr = builder1.build();

@@ -11,10 +11,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.sql.SQLException;
+import java.util.*;
 
 public class Library {
     private ArrayList<Author> authors = new ArrayList<>(); // replace by hashmap?
@@ -96,6 +94,7 @@ public class Library {
         Author author = null;
         try{
             author = getAuthorById(book.getAuthor().getId());
+            book.setAuthor(author); // try to maintain book.author
         } catch(NoSuchElementException e){ // if no such author
             return false;
         }
@@ -119,7 +118,7 @@ public class Library {
         Iterator<Book> it = books.iterator();
         while(it.hasNext()){
             Book currentBook = it.next();
-            if(currentBook.getAuthor() == author){
+            if(currentBook.getAuthor().getId() == author.getId()){
                 it.remove();
             }
         }
@@ -143,6 +142,79 @@ public class Library {
 
     }
 
+    public List<Author> getAllAuthors(){
+        return this.authors;
+    }
+
+    public List<Book> getAllBooks(){
+        return this.books;
+    }
+
+    public List<Book> getAllBooksFromAuthor(long authorId){
+        List<Book> result = new LinkedList<>();
+
+        for(Book book : books){
+            if(book.getAuthor().getId() == authorId){
+                result.add(book);
+            }
+        }
+
+        return result;
+    }
+
+    public boolean changeAuthorName(long id, String newName){
+        try{
+            Author author = getAuthorById(id);
+            author.setName(newName);
+            return true;
+        } catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public boolean changeBookTitle(long isbn, String newTitle){
+        try{
+            Book book = getBookByISBN(isbn);
+            book.setTitle(newTitle);
+            return true;
+        } catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public boolean changeBookYear(long isbn, int year){
+        try{
+            Book book = getBookByISBN(isbn);
+            book.setYear(year);
+            return true;
+        } catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public boolean changeBookNumberOfPages(long isbn, int pages){
+        try{
+            Book book = getBookByISBN(isbn);
+            book.setNumberOfPages(pages);
+            return true;
+        } catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public boolean changeBookAuthor(long isbn, long authorId){
+        try{
+            Author author = getAuthorById(authorId);
+            Book book = getBookByISBN(isbn);
+            book.setAuthor(author);
+            return true;
+        } catch(NoSuchElementException e){
+            return false;
+        }
+    }
+
+
+
     public void print(){
         System.out.println("==================== Library ====================");
 
@@ -165,63 +237,13 @@ public class Library {
         System.out.println("=================================================");
     }
 
-    public void saveInFile(String filepath){
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = null;
-
-        try {
-            db = dbf.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-
-        // create DOM tree in document
-        HashMap<Author, Element> authorElementById = new HashMap<>();
-        Document doc = db.newDocument();
-        Element root = doc.createElement("Library");
-        doc.appendChild(root);
-        for(Author author : authors){
-            Element authorElement = doc.createElement("Author");
-            authorElement.setAttribute("id", "id-" + String.valueOf(author.getId()));
-            authorElement.setAttribute("name", author.getName());
-            root.appendChild(authorElement);
-            authorElementById.put(author, authorElement);
-        }
-
-        for(Book book : books){
-            Element bookElement = doc.createElement("Book");
-            bookElement.setAttribute("id", "isbn-" + String.valueOf(book.getISBN()));
-            bookElement.setAttribute("title", book.getTitle());
-            bookElement.setAttribute("year", String.valueOf(book.getYear()));
-            bookElement.setAttribute("numberOfPages", String.valueOf(book.getNumberPages()));
-            Element authorElement = authorElementById.get(book.getAuthor());
-            authorElement.appendChild(bookElement);
-        }
-
-        // write DOM tree in file
-        TransformerFactory tf = TransformerFactory.newInstance();
-        try {
-            Transformer transformer = tf.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult stream = new StreamResult(new FileWriter(filepath));
-            transformer.transform(source, stream);
-        } catch (TransformerConfigurationException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (TransformerException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 
 
 }
 
-// change book id to isbn
-
-// loading from XML
-// upload into XML
+// + loading from XML
+// + saving into XML
 
 // + search author by ID
 // + search book by ISBN
@@ -232,7 +254,17 @@ public class Library {
 // + remove author (and all him books)
 // + remove book (if 0 books for given author, remove author or not?)
 
-// change parameters of author and book
+// + change parameters of author and book
+// + for author: name
+// + for book: title, year, numberOfPages, author
 
-// return full list of authors
-// return list of books for given author
+// + return full list of authors
+// + return list of books for given author
+
+/*
+    Field 'author' in book is not always valid:
+    it means, that book.author is not obviously points author object that exists in library
+    But it is guaranteed that book.author.id == authorInLibrary.id
+
+    NEED add .equals() method to books where only author ID is matters (not object)
+ */
