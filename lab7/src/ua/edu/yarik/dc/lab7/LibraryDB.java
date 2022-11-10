@@ -119,7 +119,7 @@ public class LibraryDB {
             throw new RuntimeException(e);
         }
 
-        throw new NoSuchElementException("No author with given isbn: " + isbn);
+        throw new NoSuchElementException("No book with given ISBN: " + isbn);
     }
 
     public boolean changeAuthorName(long id, String newName){
@@ -186,6 +186,28 @@ public class LibraryDB {
         }
 
         return authors;
+    }
+
+    public List<Book> getAllBooks(){
+        String query = "SELECT * FROM books";
+        List<Book> books = new LinkedList<>();
+
+        try{
+            ResultSet result = statement.executeQuery(query);
+            while(result.next()){
+                books.add(
+                        new Book(result.getLong("id"),
+                                result.getString("title"),
+                                result.getInt("year"),
+                                result.getInt("number_of_pages"),
+                                new Author(result.getLong("id_author"), ""))
+                );
+            }
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return books;
     }
 
     public List<Book> getAllBooksFromAuthor(long authorId){
