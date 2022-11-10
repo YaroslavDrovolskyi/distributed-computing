@@ -20,6 +20,21 @@ public class Library {
 
 //    public saveToFile(); // to be implemented
 //    public LoadFromFile(); // to be implemented
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+
+        if(!(o instanceof Library)){
+            return false;
+        }
+
+        Library other = (Library) o;
+
+        return authors.equals(other.authors) &&
+                books.equals(other.books);
+    }
 
     public boolean isAuthorExist(long id){
         for(Author a : authors){
@@ -136,10 +151,6 @@ public class Library {
 
         books.remove(book);
         return true;
-    }
-
-    public void loadFromXml(String filepath){
-
     }
 
     public List<Author> getAllAuthors(){

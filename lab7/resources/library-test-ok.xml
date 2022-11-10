@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Library>
+    <Author id="id-1" name="author-1">
+        <Book id="isbn-1" title="book-1" year="2020" numberOfPages="976"/>
+        <Book id="isbn-2" title="book-2" year="1976" numberOfPages="232"/>
+    </Author>
+    <Author id="id-2" name="author-2">
+        <Book id="isbn-4" title="book-3" year="2005" numberOfPages="1345"/>
+        <Book id="isbn-5" title="book-4" year="1956" numberOfPages="645"/>
+    </Author>
+    <Author id="id-3" name="author-3">
+        <Book id="isbn-6" title="book-6" year="2006" numberOfPages="65"/>
+        <Book id="isbn-7" title="book-7" year="2007" numberOfPages="21"/>
+    </Author>
+    <Author id="id-4" name="author-4">
+        <Book id="isbn-8" title="book-8" year="2008" numberOfPages="786"/>
+        <Book id="isbn-9" title="book-9" year="2009" numberOfPages="12"/>
+    </Author>
+    <Author id="id-5" name="author-5">
+        <Book id="isbn-10" title="book-10" year="2010" numberOfPages="45"/>
+    </Author>
+    <Author id="id-6" name="author-6">
+        <Book id="isbn-11" title="book-11" year="2011" numberOfPages="122"/>
+    </Author>
+    <Author id="id-7" name="author-7">
+        <Book id="isbn-12" title="book-12" year="2012" numberOfPages="67"/>
+    </Author>
+    <Author id="id-10" name="author-10"></Author>
+    <Author id="id-9" name="author-9">
+        <Book id="isbn-13" title="book-13" year="2013" numberOfPages="12"/>
+    </Author>
+    <Author id="id-8" name="author-8"></Author>
+</Library>

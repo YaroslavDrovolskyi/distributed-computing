@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class Program {
     public static void main(String args[]){
         /*
-        File f = new File("resources/library.xml");
+        File f = new File("resources/library-test-ok.xml");
         LibraryFromXmlBuilder builder = new LibraryFromXmlBuilder(f.getPath(), "resources/library-schema.xsd");
 
         Library library = builder.build();
@@ -138,8 +138,8 @@ public class Program {
 
         LibraryWriterXML.saveLibraryInFile(library, "resources/demo1-output.xml");
 
-        LibraryFromXmlBuilder builder1 = new LibraryFromXmlBuilder("resources/demo1-output.xml", "resources/library-schema.xsd");
-        Library libr = builder1.build();
+        LibraryFromXmlBuilder builder1 = new LibraryFromXmlBuilder("resources/demo1-output.xml");
+        Library libr = builder1.build("resources/library-schema.xsd");
         libr.print();
     }
 }

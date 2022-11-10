@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- Not unique id's -->
 <Library>
     <Author id="id-1" name="author-1">
         <Book id="isbn-1" title="book-1" year="20234300" numberOfPages="8976"/>
-        <Book id="isbn-2" title="book-2" year="876" numberOfPages="123200"/>
+        <Book id="isbn-1" title="book-2" year="876" numberOfPages="123200"/>
     </Author>
-    <Author id="id-2" name="author-1">
+    <Author id="id-1" name="author-2">
         <Book id="isbn-4" title="book-3" year="2005" numberOfPages="1345"/>
         <Book id="isbn-5" title="book-4" year="156" numberOfPages="34567"/>
     </Author>
+    <Author id="id-3" name="author-3"></Author>
 </Library>

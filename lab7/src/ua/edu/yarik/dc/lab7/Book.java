@@ -15,6 +15,23 @@ public class Book {
         this.author = author;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+
+        if(!(o instanceof Book)){
+            return false;
+        }
+
+        Book other = (Book) o;
+
+        return isbn == other.isbn && title.equals(other.title) &&
+                year == other.year && numberOfPages == other.numberOfPages &&
+                author.getId() == other.author.getId();
+    }
+
     public void setTitle(String title){
         this.title = title;
     }

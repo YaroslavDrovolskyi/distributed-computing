@@ -24,8 +24,7 @@ public class LibraryFromXmlBuilder {
     String xsdPath;
     DocumentBuilder docBuilder;
 
-    public LibraryFromXmlBuilder(String xmlPath, String xsdPath){
-        this.xmlPath = xmlPath;
+    public LibraryFromXmlBuilder(String xsdPath){
         this.xsdPath = xsdPath;
 
         try {
@@ -53,7 +52,7 @@ public class LibraryFromXmlBuilder {
         }
     }
 
-    public Library build(){
+    public Library build(String xmlPath){
         Library library = new Library();
         Document doc = null;
         try {
@@ -107,18 +106,21 @@ class StudentsParsingErrorHandler implements ErrorHandler {
     public void warning(SAXParseException e) throws SAXException {
         System.out.println("Warning: line " + e.getLineNumber() +
                 ", col " + e.getColumnNumber() + " '" + e.getMessage() + "'");
+        throw new RuntimeException("WARNING during parsing XML file");
     }
 
     @Override
     public void error(SAXParseException e) throws SAXException {
         System.out.println("Error: line " + e.getLineNumber() +
                 ", col " + e.getColumnNumber() + " '" + e.getMessage() + "'");
+        throw new RuntimeException("ERROR during parsing XML file");
     }
 
     @Override
     public void fatalError(SAXParseException e) throws SAXException {
         System.out.println("Fatal error: line " + e.getLineNumber() +
                 ", col " + e.getColumnNumber() + " '" + e.getMessage() + "'");
+        throw new RuntimeException("FATAL ERROR during parsing XML file");
     }
 }
 
