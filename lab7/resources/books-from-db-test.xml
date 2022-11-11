@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Books>
+  <Book id="isbn-0" id_author="0" numberOfPages="100" title="book-0" year="2000"/>
+  <Book id="isbn-1" id_author="0" numberOfPages="101" title="book-1" year="2001"/>
+  <Book id="isbn-2" id_author="1" numberOfPages="102" title="book-2" year="2002"/>
+  <Book id="isbn-3" id_author="1" numberOfPages="103" title="book-3" year="2003"/>
+  <Book id="isbn-4" id_author="2" numberOfPages="104" title="book-4" year="2004"/>
+  <Book id="isbn-5" id_author="2" numberOfPages="105" title="book-5" year="2005"/>
+  <Book id="isbn-6" id_author="3" numberOfPages="106" title="book-6" year="2006"/>
+  <Book id="isbn-7" id_author="3" numberOfPages="107" title="book-7" year="2007"/>
+  <Book id="isbn-8" id_author="4" numberOfPages="108" title="book-8" year="2008"/>
+  <Book id="isbn-9" id_author="4" numberOfPages="109" title="book-9" year="2009"/>
+  <Book id="isbn-10" id_author="5" numberOfPages="110" title="book-10" year="2010"/>
+  <Book id="isbn-11" id_author="5" numberOfPages="111" title="book-11" year="2011"/>
+  <Book id="isbn-12" id_author="6" numberOfPages="112" title="book-12" year="2012"/>
+  <Book id="isbn-13" id_author="6" numberOfPages="113" title="book-13" year="2013"/>
+  <Book id="isbn-14" id_author="7" numberOfPages="114" title="book-14" year="2014"/>
+  <Book id="isbn-15" id_author="7" numberOfPages="115" title="book-15" year="2015"/>
+  <Book id="isbn-16" id_author="8" numberOfPages="116" title="book-16" year="2016"/>
+  <Book id="isbn-17" id_author="8" numberOfPages="117" title="book-17" year="2017"/>
+</Books>

@@ -6,10 +6,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileWriter;
@@ -104,6 +101,8 @@ public class LibraryWriterXML {
         TransformerFactory tf = TransformerFactory.newInstance();
         try {
             Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); //
             DOMSource source = new DOMSource(doc);
             StreamResult stream = new StreamResult(new FileWriter(filepath));
             transformer.transform(source, stream);

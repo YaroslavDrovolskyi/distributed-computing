@@ -18,8 +18,6 @@ public class Library {
     private ArrayList<Author> authors = new ArrayList<>(); // replace by hashmap?
     private ArrayList<Book> books = new ArrayList<>();
 
-//    public saveToFile(); // to be implemented
-//    public LoadFromFile(); // to be implemented
     @Override
     public boolean equals(Object o){
         if(this == o){
