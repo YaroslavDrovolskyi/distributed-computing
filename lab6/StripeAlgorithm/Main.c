@@ -19,7 +19,7 @@ MPI_Comm topologyCommunicator;
 
 void initProcessMemory();
 
-void createTopology(MPI_Comm* topologyCommunicator);
+void createRingTopology(MPI_Comm* topologyCommunicator);
 void distributeTasks();
 void calculateBlockC(int iteration);
 void passColumnB();
@@ -34,7 +34,7 @@ void multiplyMatricesByStripes();
 int main(int argc, char** argv){
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &numberOfProcessors);
-	createTopology(&topologyCommunicator);
+	createRingTopology(&topologyCommunicator);
 	MPI_Comm_rank(topologyCommunicator, &rank);
 
 	// for debug: print arguments
@@ -187,7 +187,7 @@ void freeProcessMemory() {
 	free(rowC);
 }
 
-void createTopology(MPI_Comm* topologyCommunicator) {
+void createRingTopology(MPI_Comm* topologyCommunicator) {
 	int ndims = 1;
 	int dims[1] = { numberOfProcessors };
 	int periods[1] = { 1 };
