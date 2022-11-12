@@ -1,2 +1,243 @@
+mpiexec -n 2 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
 mpiexec -n 16 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
+mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
 Якщо без -n, то за замовчуванням запустить програму на всіх логічних ядрах
+
+Stripe algorithm
+mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\lab6.exe benchmark
+mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\lab6.exe test {numberOfTests} {matrixSize}
+
+
+Process with oldRank: 0, new rank: 0, coordinate: 0
+Process with oldRank: 4, new rank: 4, coordinate: 4
+Process with oldRank: 11, new rank: 11, coordinate: 11
+Process with oldRank: 3, new rank: 3, coordinate: 3
+Process with oldRank: 9, new rank: 9, coordinate: 9
+Process with oldRank: 5, new rank: 5, coordinate: 5
+Process with oldRank: 13, new rank: 13, coordinate: 13
+Process with oldRank: 7, new rank: 7, coordinate: 7
+Process with oldRank: 2, new rank: 2, coordinate: 2
+Process with oldRank: 12, new rank: 12, coordinate: 12
+Process with oldRank: 1, new rank: 1, coordinate: 1
+Process with oldRank: 15, new rank: 15, coordinate: 15
+Process with oldRank: 14, new rank: 14, coordinate: 14
+Process with oldRank: 6, new rank: 6, coordinate: 6
+Process with oldRank: 10, new rank: 10, coordinate: 10
+Process with oldRank: 8, new rank: 8, coordinate: 8
+
+
+A:
+87.000000       5.000000        56.000000       38.000000
+1.000000        62.000000       84.000000       44.000000
+48.000000       27.000000       35.000000       61.000000
+45.000000       0.000000        40.000000       48.000000
+B:
+98.000000       51.000000       57.000000       2.000000
+68.000000       61.000000       2.000000        53.000000
+26.000000       65.000000       29.000000       0.000000
+47.000000       74.000000       92.000000       29.000000
+Process with oldRank: 0, new rank: 0, coordinate: 0
+C:
+12108.000000    11194.000000    10089.000000    1541.000000
+8566.000000     12549.000000    6665.000000     4564.000000
+9417.000000     3296.000000     10317.000000    10884.000000
+8141.000000     1482.000000     7706.000000     8447.000000
+
+C (serial):
+12108.000000    11194.000000    10089.000000    1541.000000
+8566.000000     12549.000000    6665.000000     4564.000000
+10317.000000    10884.000000    9417.000000     3296.000000
+7706.000000     8447.000000     8141.000000     1482.000000
+
+
+
+
+
+
+
+
+
+
+rank = 1, iteration = 0 rowA:
+63.000000       15.000000       9.000000        90.000000
+rank = 1, iteration = 0 columnB:
+34.000000
+55.000000
+82.000000
+76.000000
+rank = 1, iteration = 0 rowC:
+0.000000        10545.000000    0.000000        0.000000
+
+rank = 1, iteration = 1 rowA:
+63.000000       15.000000       9.000000        90.000000
+rank = 1, iteration = 1 columnB:
+98.000000
+31.000000
+64.000000
+65.000000
+rank = 1, iteration = 1 rowC:
+0.000000        10545.000000    13065.000000    0.000000
+
+rank = 1, iteration = 2 rowA:
+63.000000       15.000000       9.000000        90.000000
+rank = 1, iteration = 2 columnB:
+83.000000
+82.000000
+83.000000
+34.000000
+rank = 1, iteration = 2 rowC:
+0.000000        10545.000000    13065.000000    10266.000000
+
+rank = 1, iteration = 3 rowA:
+63.000000       15.000000       9.000000        90.000000
+rank = 1, iteration = 3 columnB:
+51.000000
+63.000000
+78.000000
+94.000000
+rank = 1, iteration = 3 rowC:
+13320.000000    10545.000000    13065.000000    10266.000000
+A:
+94.000000       2.000000        17.000000       97.000000
+63.000000       15.000000       9.000000        90.000000
+3.000000        99.000000       39.000000       49.000000
+55.000000       24.000000       88.000000       56.000000
+B:
+98.000000       34.000000       51.000000       83.000000
+31.000000       55.000000       63.000000       82.000000
+64.000000       82.000000       78.000000       83.000000
+65.000000       76.000000       94.000000       34.000000
+
+rank = 0, iteration = 0 rowA:
+94.000000       2.000000        17.000000       97.000000
+rank = 0, iteration = 0 columnB:
+98.000000
+31.000000
+64.000000
+65.000000
+rank = 0, iteration = 0 rowC:
+16667.000000    0.000000        0.000000        0.000000
+
+rank = 0, iteration = 1 rowA:
+94.000000       2.000000        17.000000       97.000000
+rank = 0, iteration = 1 columnB:
+83.000000
+82.000000
+83.000000
+34.000000
+rank = 0, iteration = 1 rowC:
+16667.000000    12675.000000    0.000000        0.000000
+
+rank = 0, iteration = 2 rowA:
+94.000000       2.000000        17.000000       97.000000
+rank = 0, iteration = 2 columnB:
+51.000000
+63.000000
+78.000000
+94.000000
+rank = 0, iteration = 2 rowC:
+16667.000000    12675.000000    15364.000000    0.000000
+
+rank = 0, iteration = 3 rowA:
+94.000000       2.000000        17.000000       97.000000
+rank = 0, iteration = 3 columnB:
+34.000000
+55.000000
+82.000000
+76.000000
+rank = 0, iteration = 3 rowC:
+16667.000000    12675.000000    15364.000000    12072.000000
+
+C:
+16667.000000    12675.000000    15364.000000    12072.000000
+13320.000000    10545.000000    13065.000000    10266.000000
+9044.000000     13270.000000    14038.000000    12469.000000
+16445.000000    14662.000000    15406.000000    15741.000000
+
+C (serial):
+16667.000000    12072.000000    15364.000000    12675.000000
+13065.000000    10545.000000    13320.000000    10266.000000
+9044.000000     12469.000000    14038.000000    13270.000000
+15406.000000    14662.000000    16445.000000    15741.000000
+
+Matrices equal: 0
+
+rank = 2, iteration = 0 rowA:
+3.000000        99.000000       39.000000       49.000000
+rank = 2, iteration = 0 columnB:
+51.000000
+63.000000
+78.000000
+94.000000
+rank = 2, iteration = 0 rowC:
+0.000000        0.000000        14038.000000    0.000000
+
+rank = 2, iteration = 1 rowA:
+3.000000        99.000000       39.000000       49.000000
+rank = 2, iteration = 1 columnB:
+34.000000
+55.000000
+82.000000
+76.000000
+rank = 2, iteration = 1 rowC:
+0.000000        0.000000        14038.000000    12469.000000
+
+rank = 2, iteration = 2 rowA:
+3.000000        99.000000       39.000000       49.000000
+rank = 2, iteration = 2 columnB:
+98.000000
+31.000000
+64.000000
+65.000000
+rank = 2, iteration = 2 rowC:
+9044.000000     0.000000        14038.000000    12469.000000
+
+rank = 2, iteration = 3 rowA:
+3.000000        99.000000       39.000000       49.000000
+rank = 2, iteration = 3 columnB:
+83.000000
+82.000000
+83.000000
+34.000000
+rank = 2, iteration = 3 rowC:
+9044.000000     13270.000000    14038.000000    12469.000000
+
+rank = 3, iteration = 0 rowA:
+55.000000       24.000000       88.000000       56.000000
+rank = 3, iteration = 0 columnB:
+83.000000
+82.000000
+83.000000
+34.000000
+rank = 3, iteration = 0 rowC:
+0.000000        0.000000        0.000000        15741.000000
+
+rank = 3, iteration = 1 rowA:
+55.000000       24.000000       88.000000       56.000000
+rank = 3, iteration = 1 columnB:
+51.000000
+63.000000
+78.000000
+94.000000
+rank = 3, iteration = 1 rowC:
+16445.000000    0.000000        0.000000        15741.000000
+
+rank = 3, iteration = 2 rowA:
+55.000000       24.000000       88.000000       56.000000
+rank = 3, iteration = 2 columnB:
+34.000000
+55.000000
+82.000000
+76.000000
+rank = 3, iteration = 2 rowC:
+16445.000000    14662.000000    0.000000        15741.000000
+
+rank = 3, iteration = 3 rowA:
+55.000000       24.000000       88.000000       56.000000
+rank = 3, iteration = 3 columnB:
+98.000000
+31.000000
+64.000000
+65.000000
+rank = 3, iteration = 3 rowC:
+16445.000000    14662.000000    15406.000000    15741.000000
