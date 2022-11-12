@@ -4,8 +4,9 @@ mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
 Якщо без -n, то за замовчуванням запустить програму на всіх логічних ядрах
 
 Stripe algorithm
-mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\lab6.exe benchmark
-mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\lab6.exe test {numberOfTests} {matrixSize}
+mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\StripeAlgorithm.exe benchmark
+mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\StripeAlgorithm.exe test {numberOfTests} {matrixSize}
+mpiexec -n 2 D:\Repositories\distributed-computing\lab6\Debug\StripeAlgorithm.exe test 10 16
 
 
 Process with oldRank: 0, new rank: 0, coordinate: 0

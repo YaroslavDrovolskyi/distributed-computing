@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lab6", "lab6\lab6.vcxproj", "{66D784DD-F133-4946-AEC4-C3470AFF3401}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StripeAlgorithm", "StripeAlgorithm\StripeAlgorithm.vcxproj", "{66D784DD-F133-4946-AEC4-C3470AFF3401}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FoxAlgorithm", "FoxAlgorithm\FoxAlgorithm.vcxproj", "{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{66D784DD-F133-4946-AEC4-C3470AFF3401}.Release|x64.Build.0 = Release|x64
 		{66D784DD-F133-4946-AEC4-C3470AFF3401}.Release|x86.ActiveCfg = Release|Win32
 		{66D784DD-F133-4946-AEC4-C3470AFF3401}.Release|x86.Build.0 = Release|Win32
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Debug|x64.ActiveCfg = Debug|x64
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Debug|x64.Build.0 = Debug|x64
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Debug|x86.ActiveCfg = Debug|Win32
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Debug|x86.Build.0 = Debug|Win32
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Release|x64.ActiveCfg = Release|x64
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Release|x64.Build.0 = Release|x64
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Release|x86.ActiveCfg = Release|Win32
+		{3A887AF7-56EE-4F1E-93AF-0A3C63F02FE9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
