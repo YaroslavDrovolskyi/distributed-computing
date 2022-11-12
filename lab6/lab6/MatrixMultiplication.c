@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 
 #include "MatrixMultiplication.h"
 
@@ -32,9 +33,9 @@ void ProcessInitialization(double** pAMatrix, double** pBMatrix,
 		Initialize matrices' items
 	*/
 	srand((unsigned)clock());
-	initMatrixByRandom(*pAMatrix, *Size);
-	initMatrixByRandom(*pBMatrix, *Size);
-	initMatrixByValue(*pCMatrix, *Size, 0);
+	initMatrixByRandom(*pAMatrix, *Size, *Size);
+	initMatrixByRandom(*pBMatrix, *Size, *Size);
+	initMatrixByValue(*pCMatrix, *Size, *Size, 0);
 }
 
 
@@ -47,18 +48,26 @@ void ProcessTermination(double* pAMatrix, double* pBMatrix,
 }
 
 
-void initMatrixByValue(double* matrix, int size, int value) {
-	for (size_t i = 0; i < size; i++) {
-		for (size_t j = 0; j < size; j++) {
-			matrix[i * size + j] = value;
+void initMatrixByValue(double* matrix, int nRow, int nCol, int value) {
+	for (size_t i = 0; i < nRow; i++) {
+		for (size_t j = 0; j < nCol; j++) {
+			matrix[i * nCol + j] = value;
 		}
 	}
 }
 
-void initMatrixByRandom(double* matrix, int size) {
-	for (size_t i = 0; i < size; i++) {
-		for (size_t j = 0; j < size; j++) {
-			matrix[i * size + j] = rand() / (double)1000;
+void initMatrixByRandom(double* matrix, int nRow, int nCol) {
+	int maxValue = 100;
+	if (nRow * nCol > 50000) {
+		maxValue = 100000;
+	}
+	else if (nRow * nCol > 1000000) {
+		maxValue = 1000001;
+	}
+
+	for (size_t i = 0; i < nRow; i++) {
+		for (size_t j = 0; j < nCol; j++) {
+			matrix[i * nCol + j] = rand() % maxValue;
 		}
 	}
 }
@@ -70,6 +79,24 @@ void printMatrix(double* matrix, int size) {
 		}
 		printf("\n");
 	}
+}
+
+void printRectangularMatrix(double* matrix, int nRow, int nCol) {
+	for (size_t i = 0; i < nRow; i++) {
+		for (size_t j = 0; j < nCol; j++) {
+			printf("%f \t", matrix[i * nCol + j]);
+		}
+		printf("\n");
+	}
+}
+
+int isMatricesEqual(double* m1, double* m2, int size, double eps) {
+	for (int i = 0; i < size; i++) {
+		if (fabs(m1[i] - m2[i]) > eps) {
+			return 0;
+		}
+	}
+	return 1;
 }
 
 
