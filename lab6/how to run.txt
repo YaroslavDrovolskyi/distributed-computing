@@ -1,31 +1,47 @@
-mpiexec -n 2 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
-mpiexec -n 16 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
-mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\lab6.exe
-Якщо без -n, то за замовчуванням запустить програму на всіх логічних ядрах
-
-Stripe algorithm
-mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\StripeAlgorithm.exe benchmark
-mpiexec -n {processorsNumber} D:\Repositories\distributed-computing\lab6\Debug\StripeAlgorithm.exe test {numberOfTests} {matrixSize}
-
- -- TEST
-mpiexec -n 2 D:\Repositories\distributed-computing\lab6\Debug\StripeAlgorithm.exe test 10 16
-
-============================= Fox =============================
-mpiexec -n 4 D:\Repositories\distributed-computing\lab6\Debug\FoxAlgorithm.exe
-mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\FoxAlgorithm.exe
-
-mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\FoxAlgorithm.exe test 10 54
+================================== Run MPI ===================================
+mpiexec -n {number of processes} {path to .exe-file} {parameters for .exe-file}
+if -n is not specified, number of processes will be the number of cores on computer
+Run following commands from root directory of the solution
 
 
-===== Cannon algorithm =====
-mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe test 10 54
-mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe benchmark
+============================== Serial algorithm ==============================
+Debug\SerialAlgorithm.exe benchmark
+Debug\SerialAlgorithm.exe test {numberOfTests} {matrixSize}
+Debug\SerialAlgorithm.exe test 10 100
 
-mpiexec -n 81 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe test 5 243 - to see communication delay
+
+============================== Stripe algorithm ==============================
+mpiexec -n {number of processes} Debug\StripeAlgorithm.exe benchmark
+mpiexec -n {number of processes} Debug\StripeAlgorithm.exe test {numberOfTests} {matrixSize}
+mpiexec -n 2 Debug\StripeAlgorithm.exe test 10 16
+	CONSTRAINTS: 
+		- matrixSize must be divisibly by numberOfProcesses
 
 
-Improving of cycling shifting blocks A and B
+=============================== Fox algorithm ================================
+mpiexec -n {number of processes} Debug\FoxAlgorithm.exe benchmark
+mpiexec -n {number of processes} Debug\FoxAlgorithm.exe test {numberOfTests} {matrixSize}
+mpiexec -n 9 Debug\FoxAlgorithm.exe test 10 54
+	CONSTRAINTS: 
+		- numberOfProcesses must be a perfect square
+		- matrixSize must be divisibly by sqrt(numberOfProcesses)
+
+
+============================== Cannon algorithm ==============================
+mpiexec -n {number of processes} Debug\CannonAlgorithm.exe benchmark
+mpiexec -n {number of processes} Debug\CannonAlgorithm.exe test {numberOfTests} {matrixSize}
+mpiexec -n 9 Debug\CannonAlgorithm.exe test 10 54
+	CONSTRAINTS: 
+		- numberOfProcesses must be a perfect square
+		- matrixSize must be divisibly by sqrt(numberOfProcesses)
+
+
+
+
+
+========= Improving cycle shifting blocks A and B in Cannon algorithm ========
 81 processes, matrix size: 243
+mpiexec -n 81 Debug\CannonAlgorithm.exe test 5 243
 
 Before:
 test 1, time: 1.861585 s, IS PASSED: 1
@@ -57,6 +73,8 @@ test 18, time: 1.995318 s, IS PASSED: 1
 test 19, time: 1.998586 s, IS PASSED: 1
 test 20, time: 1.903958 s, IS PASSED: 1
 AVERAGE TIME: 2.064893 s
+
+The difference is 0.551161 s
 
 ============================
 

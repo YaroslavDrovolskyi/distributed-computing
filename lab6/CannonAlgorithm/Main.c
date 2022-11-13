@@ -56,7 +56,7 @@ void test(int numberOfTests) {
 		if (rank == 0) {
 			double* serialResult = (double*)malloc(matrixSize * matrixSize * sizeof(double));
 			initMatrixByValue(serialResult, matrixSize, matrixSize, 0);
-			serialMatrixMultiplication(matrixA, matrixB, serialResult, matrixSize);
+			multiplyMatricesBySerialAlgorithm(matrixA, matrixB, serialResult, matrixSize);
 			passed *= isMatricesEqual(matrixC, serialResult, matrixSize, 0);
 			printf("test %d, time: %f s, IS PASSED: %d\n", i + 1, dt, passed);
 		}

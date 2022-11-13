@@ -18,24 +18,18 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixMultiplication.c">
+    <ClCompile Include="StripeAlgorithm.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FoxMultiplication.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainStripe.c">
+    <ClCompile Include="..\SerialAlgorithm\SerialAlgorithm.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MatrixMultiplication.h">
+    <ClInclude Include="StripeAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FoxMultiplication.h">
+    <ClInclude Include="..\SerialAlgorithm\SerialAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

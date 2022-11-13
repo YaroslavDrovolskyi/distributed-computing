@@ -174,7 +174,7 @@ void passOverRowInitialBlockA(int iteration) {
 
 
 void calculateBlockC() {
-	serialMatrixMultiplication(blockA, blockB, blockC, blockSize);
+	multiplyMatricesBySerialAlgorithm(blockA, blockB, blockC, blockSize);
 }
 
 // give blockB to up process, and receive blockB from down process

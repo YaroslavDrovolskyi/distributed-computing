@@ -213,7 +213,7 @@ void shiftUpBlockB(int offset) {
 
 
 void calculateBlockC() {
-	serialMatrixMultiplication(blockA, blockB, blockC, blockSize);
+	multiplyMatricesBySerialAlgorithm(blockA, blockB, blockC, blockSize);
 }
 
 // send blockA to left process, and receive blockA from right process
