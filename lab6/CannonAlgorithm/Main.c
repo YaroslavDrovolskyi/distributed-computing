@@ -43,12 +43,14 @@ int main(int argc, char** argv) {
 
 void test(int numberOfTests) {
 	int passed = 1;
+	double overallTime = 0;
 	for (int i = 0; i < numberOfTests; i++) {
 		initProcessMemory();
 
 		double startTime = MPI_Wtime();
 		multiplyMatricesByCannonAlgorithm();
 		double dt = MPI_Wtime() - startTime;
+		overallTime += dt;
 
 		// check if matrices multiplied correctly
 		if (rank == 0) {
@@ -63,7 +65,13 @@ void test(int numberOfTests) {
 	}
 
 	if (rank == 0) {
-		printf("ARE TESTS PASSED: %d", passed);
+		if (numberOfTests > 0) {
+			printf("AVERAGE TIME: %f s\n", overallTime / numberOfTests);
+			printf("ARE TESTS PASSED: %d \n", passed);
+		}
+		else {
+			printf("No tests have been run\n");
+		}
 	}
 }
 

@@ -24,8 +24,9 @@ void freeProcessMemory();
 void writeMatrixByBlocks(double* matrix, double* block, int matrixSize, int blockSize, int gridSize);
 void readMatrixFromBlocks(double* blocksMatrix, double* resultMatrix, int matrixSize, int blockSize, int gridSize);
 
+void multiplyMatricesByFoxAlgorithm();
+void distributeTasks();
 void passOverRowInitialBlockA(int iteration);
 void calculateBlockC();
 void passBlockB();
 void gatherMatrixC();
-void multiplyMatricesByFoxAlgorithm();

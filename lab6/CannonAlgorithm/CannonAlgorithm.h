@@ -25,6 +25,8 @@ void readMatrixFromBlocks(double* blocksMatrix, double* resultMatrix, int matrix
 
 void multiplyMatricesByCannonAlgorithm();
 void distributeTasks();
+void shiftLeftBlockA(int offset);
+void shiftUpBlockB(int offset);
 void calculateBlockC();
 void passBlockA();
 void passBlockB();

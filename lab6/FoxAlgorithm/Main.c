@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 	
 	// for debug: print arguments
 	if (rank == 0) {
-		printf("FOX ALGORITHM=\n");
+		printf("FOX ALGORITHM\n");
 		printf("=== Arguments ===\n");
 		for (int i = 1; i < argc; i++) {
 			printf("[%d]\t %s \n", i, argv[i]);
@@ -43,12 +43,14 @@ int main(int argc, char** argv) {
 
 void test(int numberOfTests) {
 	int passed = 1;
+	double overallTime = 0;
 	for (int i = 0; i < numberOfTests; i++) {
 		initProcessMemory();
 
 		double startTime = MPI_Wtime();
 		multiplyMatricesByFoxAlgorithm();
 		double dt = MPI_Wtime() - startTime;
+		overallTime += dt;
 
 		// check if matrices multiplied correctly
 		if (rank == 0) {
@@ -63,7 +65,13 @@ void test(int numberOfTests) {
 	}
 
 	if (rank == 0) {
-		printf("ARE TESTS PASSED: %d", passed);
+		if (numberOfTests > 0) {
+			printf("AVERAGE TIME: %f s\n", overallTime / numberOfTests);
+			printf("ARE TESTS PASSED: %d \n", passed);
+		}
+		else {
+			printf("No tests have been run\n");
+		}
 	}
 }
 

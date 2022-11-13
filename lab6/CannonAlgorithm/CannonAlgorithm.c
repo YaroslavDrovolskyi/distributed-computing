@@ -145,18 +145,11 @@ void distributeTasks() {
 		free(blocksOfMatrixB);
 	}
 
-
-	// cyclic shift of blockA by (rowIndex) positions to the left
+	// cycling shifting blocks A and B
 	int rowIndex = rank / gridSize;
-	for (int i = 0; i < rowIndex; i++) {
-		passBlockA();
-	}
-
-	// cyclic shift of blockB by (columnIndex) positions to the up
 	int columnIndex = rank % gridSize;
-	for (int j = 0; j < columnIndex; j++) {
-		passBlockB();
-	}
+	shiftLeftBlockA(rowIndex);
+	shiftUpBlockB(columnIndex);
 
 	// for debug
 //	printf("\nrank: %d, initialBlockA:\n", rank);
@@ -164,6 +157,60 @@ void distributeTasks() {
 //	printf("\nrank: %d, blockB:\n", rank);
 //	printMatrix(blockB, blockSize);
 }
+
+// Perform cycling shifting of blockA by [offset] positions to the left
+void shiftLeftBlockA(int offset) {
+	// determiantion of ranks if destination & source processes
+	int rowIndex = rank / gridSize;
+	int firstRankInRow = rowIndex * gridSize;
+	int lastRankInRow = rowIndex * gridSize + gridSize - 1;
+
+	int destinationRank = (rank - offset >= firstRankInRow) ? (rank - offset) : 
+		(lastRankInRow - (offset - (rank - firstRankInRow) - 1));
+
+	// rank of process, from which current process get blockA
+	int sourceRank = (rank + offset <= lastRankInRow) ? (rank + offset) : 
+		(firstRankInRow + (offset - (lastRankInRow - rank) - 1));
+
+	// sending & receiving itself
+	double* copyBlockA = (double*)malloc(blockSize * blockSize * sizeof(double));
+	for (int i = 0; i < blockSize * blockSize; i++) {
+		copyBlockA[i] = blockA[i];
+	}
+
+	MPI_Status status;
+	MPI_Sendrecv(copyBlockA, blockSize * blockSize, MPI_DOUBLE, destinationRank, 0,
+		blockA, blockSize * blockSize, MPI_DOUBLE, sourceRank, 0, gridCommunicator, &status);
+	free(copyBlockA);
+}
+
+// Perform cycling shifting of blockB by [offset] positions to the up
+void shiftUpBlockB(int offset) {
+	// determiantion of ranks if destination & source processes
+	int colIndex = rank % gridSize;
+	int firstRankInColumn = colIndex;
+	int lastRankInColumn = gridSize * (gridSize - 1) + colIndex;
+
+	int destinationRank = (rank - offset * gridSize >= firstRankInColumn) ? (rank - offset * gridSize) :
+		(lastRankInColumn - gridSize * (offset - (rank - firstRankInColumn)/gridSize - 1));
+
+	// rank of process, from which current process get blockA
+	int sourceRank = (rank + offset * gridSize <= lastRankInColumn) ? (rank + offset * gridSize) :
+		(firstRankInColumn + gridSize * (offset - (lastRankInColumn - rank) / gridSize - 1));
+
+
+	// sending & reveiving itself
+	double* copyBlockB = (double*)malloc(blockSize * blockSize * sizeof(double));
+	for (int i = 0; i < blockSize * blockSize; i++) {
+		copyBlockB[i] = blockB[i];
+	}
+
+	MPI_Status status;
+	MPI_Sendrecv(copyBlockB, blockSize * blockSize, MPI_DOUBLE, destinationRank, 0,
+		blockB, blockSize * blockSize, MPI_DOUBLE, sourceRank, 0, gridCommunicator, &status);
+	free(copyBlockB);
+}
+
 
 void calculateBlockC() {
 	serialMatrixMultiplication(blockA, blockB, blockC, blockSize);

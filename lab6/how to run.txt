@@ -24,12 +24,39 @@ mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.ex
 mpiexec -n 81 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe test 5 243 - to see communication delay
 
 
+Improving of cycling shifting blocks A and B
 81 processes, matrix size: 243
+
+Before:
 test 1, time: 1.861585 s, IS PASSED: 1
 test 2, time: 3.125366 s, IS PASSED: 1
 test 3, time: 3.043447 s, IS PASSED: 1
 test 4, time: 2.561935 s, IS PASSED: 1
 test 5, time: 2.487937 s, IS PASSED: 1
+AVERAGE TIME: 2.616054 s
+
+After:
+test 1, time: 1.550441 s, IS PASSED: 1
+test 2, time: 2.334881 s, IS PASSED: 1
+test 3, time: 2.383314 s, IS PASSED: 1
+test 4, time: 2.362911 s, IS PASSED: 1
+test 5, time: 2.132419 s, IS PASSED: 1
+test 6, time: 1.963871 s, IS PASSED: 1
+test 7, time: 1.986378 s, IS PASSED: 1
+test 8, time: 2.017987 s, IS PASSED: 1
+test 9, time: 2.114978 s, IS PASSED: 1
+test 10, time: 2.123394 s, IS PASSED: 1
+test 11, time: 2.013461 s, IS PASSED: 1
+test 12, time: 2.048444 s, IS PASSED: 1
+test 13, time: 2.031468 s, IS PASSED: 1
+test 14, time: 2.115180 s, IS PASSED: 1
+test 15, time: 2.074537 s, IS PASSED: 1
+test 16, time: 2.082364 s, IS PASSED: 1
+test 17, time: 2.063972 s, IS PASSED: 1
+test 18, time: 1.995318 s, IS PASSED: 1
+test 19, time: 1.998586 s, IS PASSED: 1
+test 20, time: 1.903958 s, IS PASSED: 1
+AVERAGE TIME: 2.064893 s
 
 ============================
 
