@@ -4,11 +4,10 @@
 
 int numberOfProcesses, matrixSize, gridSize, blockSize;
 MPI_Comm gridCommunicator;
-int rank, upProcessRank, downProcessRank;
+int rank, upProcessRank, downProcessRank, leftProcessRank, rightProcessRank;
 double* matrixA;
 double* matrixB;
 double* matrixC;
-double* initialBlockA;
 double* blockA;
 double* blockB;
 double* blockC;
@@ -24,8 +23,10 @@ void freeProcessMemory();
 void writeMatrixByBlocks(double* matrix, double* block, int matrixSize, int blockSize, int gridSize);
 void readMatrixFromBlocks(double* blocksMatrix, double* resultMatrix, int matrixSize, int blockSize, int gridSize);
 
-void passOverRowInitialBlockA(int iteration);
+void multiplyMatricesByCannonAlgorithm();
+void distributeTasks();
 void calculateBlockC();
+void passBlockA();
 void passBlockB();
 void gatherMatrixC();
-void multiplyMatricesByFoxAlgorithm();
+

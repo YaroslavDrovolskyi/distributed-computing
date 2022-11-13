@@ -1,21 +1,28 @@
 #include <math.h>
-#include "FoxAlgorithm.h"
+#include "CannonAlgorithm.h"
 #include "../SerialAlgorithm/SerialAlgorithm.h"
 
-// Creation of two-dimensional grid communicator and
+// Create two-dimensional grid topology, and init communicator
 void createGridTopology() {
 	int ndims = 2;
-	int dims[2] = { gridSize, gridSize};
+	int dims[2] = { gridSize, gridSize };
 	int periods[2] = { 1,1 };
 	int reorder = 1;
 
 	MPI_Cart_create(MPI_COMM_WORLD, ndims, dims, periods, reorder, &gridCommunicator);
 	MPI_Comm_rank(gridCommunicator, &rank);
-	
+
 	// using this property: "Row-major numbering is always used for the processes in a Cartesian structure."
 	// so (0;0) -> 0, (0;1)->1, (0;2)->2, ...
 	upProcessRank = (rank - gridSize >= 0) ? (rank - gridSize) : (rank + (gridSize - 1) * gridSize);
 	downProcessRank = (rank + gridSize < numberOfProcesses) ? (rank + gridSize) : (rank - (gridSize - 1) * gridSize);
+
+	int rowIndex = rank / gridSize;
+	int firstRankInRow = rowIndex * gridSize;
+	int lastRankInRow = rowIndex * gridSize + gridSize - 1;
+	leftProcessRank = (rank - 1 >= firstRankInRow) ? (rank - 1) : (lastRankInRow);
+	rightProcessRank = (rank + 1 <= lastRankInRow) ? (rank + 1) : (firstRankInRow);
+
 	// for debug
 //	printf("\nrank: %d, upRank: %d, rightRank: %d, downRank: %d, leftRank: %d",
 //		rank, upProcessRank, rightProcessRank, downProcessRank, leftProcessRank);
@@ -62,7 +69,6 @@ void initProcessMemory() {
 		initMatrixByValue(matrixC, matrixSize, matrixSize, 0);
 	}
 
-	initialBlockA = (double*)malloc(blockSize * blockSize * sizeof(double));
 	blockA = (double*)malloc(blockSize * blockSize * sizeof(double));
 	blockB = (double*)malloc(blockSize * blockSize * sizeof(double));
 	blockC = (double*)malloc(blockSize * blockSize * sizeof(double));
@@ -75,7 +81,6 @@ void freeProcessMemory() {
 		free(matrixB);
 		free(matrixC);
 	}
-	free(initialBlockA);
 	free(blockA);
 	free(blockB);
 	free(blockC);
@@ -115,19 +120,19 @@ void readMatrixFromBlocks(double* matrixByBlocks, double* resultMatrix, int matr
 	}
 }
 
-// perform initial distribution of A's and B's blocks between processes 
+// perform initial distribution of A's and B's blocks between processes
 void distributeTasks() {
 	// send block (i,j) of matrix A to process (i,j)
 	double* blocksOfMatrixA = NULL;
-	if(rank == 0) {
+	if (rank == 0) {
 		blocksOfMatrixA = (double*)malloc(matrixSize * matrixSize * sizeof(double));
 		writeMatrixByBlocks(matrixA, blocksOfMatrixA, matrixSize, blockSize, gridSize);
 	}
-	MPI_Scatter(blocksOfMatrixA, blockSize * blockSize, MPI_DOUBLE, initialBlockA, blockSize * blockSize, MPI_DOUBLE, 0, gridCommunicator);
+	MPI_Scatter(blocksOfMatrixA, blockSize * blockSize, MPI_DOUBLE, blockA, blockSize * blockSize, MPI_DOUBLE, 0, gridCommunicator);
 	if (rank == 0) {
 		free(blocksOfMatrixA);
 	}
-	
+
 
 	// send block (i,j) of matrix B to process (i,j)
 	double* blocksOfMatrixB = NULL;
@@ -139,7 +144,19 @@ void distributeTasks() {
 	if (rank == 0) {
 		free(blocksOfMatrixB);
 	}
-	
+
+
+	// cyclic shift of blockA by (rowIndex) positions to the left
+	int rowIndex = rank / gridSize;
+	for (int i = 0; i < rowIndex; i++) {
+		passBlockA();
+	}
+
+	// cyclic shift of blockB by (columnIndex) positions to the up
+	int columnIndex = rank % gridSize;
+	for (int j = 0; j < columnIndex; j++) {
+		passBlockB();
+	}
 
 	// for debug
 //	printf("\nrank: %d, initialBlockA:\n", rank);
@@ -148,36 +165,25 @@ void distributeTasks() {
 //	printMatrix(blockB, blockSize);
 }
 
-// decide what initialBlockA should be shared over all processes in row, and share block
-// On the iteration #0 we should share initialBlockA of diagonal process
-// on j-th iteration we should share initialBlockA of [i][(i+j) % gridSize] process
-// where i - is index of current row
-void passOverRowInitialBlockA(int iteration) {
-	int i = rank / gridSize; // index of current row
-	int rankOfMainProcessInRow = (i + iteration) % gridSize + (i * gridSize); // starting from
-	if (rank == rankOfMainProcessInRow) { // send initBlockA ro all processes in row
-		for (int k = i * gridSize; k < (i + 1) * gridSize; k++) {
-			if (k == rankOfMainProcessInRow) {
-				continue;
-			}
-			MPI_Send(initialBlockA, blockSize * blockSize, MPI_DOUBLE, k, 0, gridCommunicator);
-		}
-		for (int m = 0; m < blockSize * blockSize; m++) {
-			blockA[m] = initialBlockA[m];
-		}
-	}
-	else {
-		MPI_Status status;
-		MPI_Recv(blockA, blockSize * blockSize, MPI_DOUBLE, rankOfMainProcessInRow, 0, gridCommunicator, &status);
-	}
-}
-
-
 void calculateBlockC() {
 	serialMatrixMultiplication(blockA, blockB, blockC, blockSize);
 }
 
-// give blockB to up process, and receive blockB from down process
+// send blockA to left process, and receive blockA from right process
+void passBlockA() {
+	double* copyBlockA = (double*)malloc(blockSize * blockSize * sizeof(double));
+	for (int i = 0; i < blockSize * blockSize; i++) {
+		copyBlockA[i] = blockA[i];
+	}
+
+	MPI_Status status;
+	MPI_Sendrecv(copyBlockA, blockSize * blockSize, MPI_DOUBLE, leftProcessRank, 0,
+		blockA, blockSize * blockSize, MPI_DOUBLE, rightProcessRank, 0, gridCommunicator, &status);
+	free(copyBlockA);
+}
+
+
+// send blockB to up process, and receive blockB from down process
 void passBlockB() {
 	double* copyBlockB = (double*)malloc(blockSize * blockSize * sizeof(double));
 	for (int i = 0; i < blockSize * blockSize; i++) {
@@ -200,7 +206,7 @@ void gatherMatrixC() {
 	MPI_Gather(blockC, blockSize * blockSize, MPI_DOUBLE,
 		matrixByBlocks, blockSize * blockSize, MPI_DOUBLE, 0, gridCommunicator); ////////////////////////////matrixByBlocks
 
-	
+
 	if (rank == 0) {
 		readMatrixFromBlocks(matrixByBlocks, matrixC, matrixSize, blockSize, gridSize);
 		free(matrixByBlocks);
@@ -209,20 +215,23 @@ void gatherMatrixC() {
 
 
 /*
-	Perform Fox algorithm
+	Perform Cannon algorithm
 	Steps:
-		- distribute data (process (i,j) must get blocks A(i,j) and B(i,j))
-		- do gridSize iterations with following steps:
-			- on each row scatter correct initialBlockA
-			- for each process calculate blockC = blockA * blockB
-			- each process should pass blockB to up process and get blockB from down process
-		- gather matrix C
+		- distribute data
+			- process (i,j) must get blocks A(i,j) and B(i,j)
+			- cyclic shift of blockA by rowIndex positions to the left (rowIndex is row index of current process)
+			- cyclic shift of blockB by columnIndex positions to the up (columnIndex is column index of current process)
+		- do gridSize iterations with following steps (for each process):
+			- calculate blockC += blockA * blockB
+			- pass blockA to left process and get blockA from right process
+			- pass blockB to up process and get blockB from down process
+		- process 0 should gather matrix C from blocks C(i,j)
 */
-void multiplyMatricesByFoxAlgorithm() {
+void multiplyMatricesByCannonAlgorithm() {
 	distributeTasks();
 	for (int i = 0; i < gridSize; i++) {
-		passOverRowInitialBlockA(i);
-		calculateBlockC(i);
+		calculateBlockC();
+		passBlockA();
 		passBlockB();
 		// for debug
 //		printf("\nIteration %d, rank: %d, blockA:\n", i, rank);

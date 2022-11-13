@@ -1,4 +1,4 @@
-#include "FoxAlgorithm.h"
+#include "CannonAlgorithm.h"
 #include "../SerialAlgorithm/SerialAlgorithm.h"
 
 
@@ -10,10 +10,10 @@ int main(int argc, char** argv) {
 	MPI_Comm_size(MPI_COMM_WORLD, &numberOfProcesses);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	
+
 	// for debug: print arguments
 	if (rank == 0) {
-		printf("FOX ALGORITHM=\n");
+		printf("CANNON ALGORITHM\n");
 		printf("=== Arguments ===\n");
 		for (int i = 1; i < argc; i++) {
 			printf("[%d]\t %s \n", i, argv[i]);
@@ -47,7 +47,7 @@ void test(int numberOfTests) {
 		initProcessMemory();
 
 		double startTime = MPI_Wtime();
-		multiplyMatricesByFoxAlgorithm();
+		multiplyMatricesByCannonAlgorithm();
 		double dt = MPI_Wtime() - startTime;
 
 		// check if matrices multiplied correctly

@@ -16,6 +16,59 @@ mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\FoxAlgorithm.exe
 
 mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\FoxAlgorithm.exe test 10 54
 
+
+===== Cannon algorithm =====
+mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe test 10 54
+mpiexec -n 9 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe benchmark
+
+mpiexec -n 81 D:\Repositories\distributed-computing\lab6\Debug\CannonAlgorithm.exe test 5 243 - to see communication delay
+
+
+81 processes, matrix size: 243
+test 1, time: 1.861585 s, IS PASSED: 1
+test 2, time: 3.125366 s, IS PASSED: 1
+test 3, time: 3.043447 s, IS PASSED: 1
+test 4, time: 2.561935 s, IS PASSED: 1
+test 5, time: 2.487937 s, IS PASSED: 1
+
+============================
+
+
+
+
+
+
+
+
+
+useful code for debug
+1) print resultring matrix
+if(rank == 0){
+	printf("C:\n");
+	printMatrix(matrixC, matrixSize);
+	printf("correct C:\n");
+	printMatrix(serialResult, matrixSize);
+}
+
+2) Print blocks
+printf("\nrank: %d, blockA:\n", rank);
+printMatrix(blockA, blockSize);
+printf("\nrank: %d, blockB:\n", rank);
+printMatrix(blockB, blockSize);
+
+3) Print blocks and iteration
+printf("\nIteration %d, rank: %d, blockA:\n", i, rank);
+printMatrix(blockA, blockSize);
+printf("\nIteration %d, rank: %d, blockC:\n", i, rank);
+printMatrix(blockC, blockSize);
+
+
+
+
+
+
+
+
 rank: 6, upRank: 3, rightRank: 7, downRank: 0, leftRank: 8
 rank: 2, upRank: 8, rightRank: 0, downRank: 5, leftRank: 1
 rank: 0, upRank: 6, rightRank: 1, downRank: 3, leftRank: 2
@@ -25,6 +78,9 @@ rank: 1, upRank: 7, rightRank: 2, downRank: 4, leftRank: 0
 rank: 4, upRank: 1, rightRank: 5, downRank: 7, leftRank: 3
 rank: 3, upRank: 0, rightRank: 4, downRank: 6, leftRank: 5
 rank: 5, upRank: 2, rightRank: 3, downRank: 8, leftRank: 4
+
+
+
 
 
 
@@ -243,3 +299,33 @@ IS PASSED: 0
 
 correct blocks
 (0,0) (1,1) (2,2)
+
+
+
+===== Cannon agorithm ========
+
+C:
+14041.000000    22258.000000    28050.000000    24675.000000    32869.000000    36743.000000    30453.000000    32453.000000    10688.000000
+20842.000000    25183.000000    27466.000000    27356.000000    30236.000000    37134.000000    31090.000000    29873.000000    17914.000000
+11623.000000    14399.000000    16550.000000    17732.000000    22600.000000    25696.000000    20659.000000    22105.000000    7334.000000
+18560.000000    18988.000000    29333.000000    20288.000000    23187.000000    32089.000000    23468.000000    25128.000000    14662.000000
+14902.000000    16562.000000    21301.000000    19996.000000    24319.000000    29372.000000    22513.000000    25071.000000    9858.000000
+10872.000000    14473.000000    20162.000000    16625.000000    21509.000000    27766.000000    19507.000000    22063.000000    6688.000000
+17333.000000    15818.000000    26609.000000    22115.000000    28291.000000    36756.000000    27046.000000    28878.000000    10274.000000
+16386.000000    15489.000000    23480.000000    18891.000000    24174.000000    29667.000000    22902.000000    23506.000000    10786.000000
+19605.000000    20494.000000    26238.000000    21219.000000    25824.000000    35644.000000    25864.000000    28829.000000    15199.000000
+correct C:
+14041.000000    22258.000000    28050.000000    29037.000000    29487.000000    30466.000000    30454.000000    24703.000000    14735.000000
+20842.000000    25183.000000    27466.000000    24743.000000    27574.000000    34818.000000    29434.000000    28902.000000    16760.000000
+11623.000000    14399.000000    16550.000000    22574.000000    21115.000000    21203.000000    22221.000000    14802.000000    11801.000000
+23203.000000    19886.000000    22844.000000    20288.000000    23187.000000    32089.000000    23468.000000    25128.000000    14662.000000
+17003.000000    20456.000000    27101.000000    19996.000000    24319.000000    29372.000000    22513.000000    25071.000000    9858.000000
+18135.000000    16774.000000    21885.000000    16625.000000    21509.000000    27766.000000    19507.000000    22063.000000    6688.000000
+20244.000000    22257.000000    28751.000000    22115.000000    28291.000000    36756.000000    27046.000000    28878.000000    10274.000000
+19235.000000    17849.000000    23369.000000    18891.000000    24174.000000    29667.000000    22902.000000    23506.000000    10786.000000
+23349.000000    23380.000000    29556.000000    21219.000000    25824.000000    35644.000000    25864.000000    28829.000000    15199.000000
+
+Correct blocks 
+(0,0) 
+(1,1) (1,2)
+(2,1) (2,2)
