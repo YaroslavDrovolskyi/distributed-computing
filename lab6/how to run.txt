@@ -7,12 +7,17 @@ Run following commands from root directory of the solution
 ============================== Serial algorithm ==============================
 Debug\SerialAlgorithm.exe benchmark
 Debug\SerialAlgorithm.exe test {numberOfTests} {matrixSize}
+
+Debug\SerialAlgorithm.exe benchmark
 Debug\SerialAlgorithm.exe test 10 100
 
 
 ============================== Stripe algorithm ==============================
 mpiexec -n {number of processes} Debug\StripeAlgorithm.exe benchmark
 mpiexec -n {number of processes} Debug\StripeAlgorithm.exe test {numberOfTests} {matrixSize}
+
+mpiexec -n 4 Debug\StripeAlgorithm.exe benchmark
+mpiexec -n 9 Debug\StripeAlgorithm.exe benchmark
 mpiexec -n 2 Debug\StripeAlgorithm.exe test 10 16
 	CONSTRAINTS: 
 		- matrixSize must be divisibly by numberOfProcesses
@@ -21,6 +26,9 @@ mpiexec -n 2 Debug\StripeAlgorithm.exe test 10 16
 =============================== Fox algorithm ================================
 mpiexec -n {number of processes} Debug\FoxAlgorithm.exe benchmark
 mpiexec -n {number of processes} Debug\FoxAlgorithm.exe test {numberOfTests} {matrixSize}
+
+mpiexec -n 4 Debug\FoxAlgorithm.exe benchmark
+mpiexec -n 9 Debug\FoxAlgorithm.exe benchmark
 mpiexec -n 9 Debug\FoxAlgorithm.exe test 10 54
 	CONSTRAINTS: 
 		- numberOfProcesses must be a perfect square
@@ -30,6 +38,9 @@ mpiexec -n 9 Debug\FoxAlgorithm.exe test 10 54
 ============================== Cannon algorithm ==============================
 mpiexec -n {number of processes} Debug\CannonAlgorithm.exe benchmark
 mpiexec -n {number of processes} Debug\CannonAlgorithm.exe test {numberOfTests} {matrixSize}
+
+mpiexec -n 4 Debug\CannonAlgorithm.exe benchmark
+mpiexec -n 9 Debug\CannonAlgorithm.exe benchmark
 mpiexec -n 9 Debug\CannonAlgorithm.exe test 10 54
 	CONSTRAINTS: 
 		- numberOfProcesses must be a perfect square
@@ -109,7 +120,7 @@ printMatrix(blockC, blockSize);
 
 
 
-
+// matrix[i][j] == matrixAsArray[i * size + j]
 
 
 

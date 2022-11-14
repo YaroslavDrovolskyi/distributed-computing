@@ -1,0 +1,123 @@
+CANNON ALGORITHM
+Number of processes: 4
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.000369 s
+matrixSize: 360, time: 0.098295 s
+matrixSize: 900, time: 1.650920 s
+matrixSize: 1260, time: 7.117652 s
+matrixSize: 1800, time: 14.438860 s
+matrixSize: 2520, time: 44.155190 s
+matrixSize: 2700, time: 57.550028 s
+matrixSize: 3096, time: 85.686633 s
+Benchmark finished. OVERALL TIME: 210.697947 s
+
+
+CANNON ALGORITHM
+Number of processes: 9
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.001683 s
+matrixSize: 360, time: 0.090603 s
+matrixSize: 900, time: 1.347626 s
+matrixSize: 1260, time: 4.323009 s
+matrixSize: 1800, time: 8.453775 s
+matrixSize: 2520, time: 25.519042 s
+matrixSize: 2700, time: 33.692361 s
+matrixSize: 3096, time: 53.865885 s
+Benchmark finished. OVERALL TIME: 127.293983 s
+
+
+
+
+
+
+
+
+FOX ALGORITHM
+Number of processes: 4
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.000470 s
+matrixSize: 360, time: 0.103132 s
+matrixSize: 900, time: 1.829122 s
+matrixSize: 1260, time: 7.624799 s
+matrixSize: 1800, time: 14.431267 s
+matrixSize: 2520, time: 43.599491 s
+matrixSize: 2700, time: 57.354630 s
+matrixSize: 3096, time: 84.427705 s
+Benchmark finished. OVERALL TIME: 209.370615 s
+
+FOX ALGORITHM
+Number of processes: 9
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.001467 s
+matrixSize: 360, time: 0.084662 s
+matrixSize: 900, time: 1.301264 s
+matrixSize: 1260, time: 4.239923 s
+matrixSize: 1800, time: 8.903523 s
+matrixSize: 2520, time: 25.337840 s
+matrixSize: 2700, time: 33.588534 s
+matrixSize: 3096, time: 54.118840 s
+Benchmark finished. OVERALL TIME: 127.576052 s
+
+
+
+
+
+
+
+STRIPE ALGORITHM
+Number of processes: 4
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.000912 s
+matrixSize: 360, time: 0.098966 s
+matrixSize: 900, time: 2.000134 s
+matrixSize: 1260, time: 7.213856 s
+matrixSize: 1800, time: 16.619269 s
+matrixSize: 2520, time: 51.865106 s
+matrixSize: 2700, time: 65.208089 s
+matrixSize: 3096, time: 96.677231 s
+Benchmark finished. OVERALL TIME: 239.683563 s
+
+STRIPE ALGORITHM
+Number of processes: 9
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.000874 s
+matrixSize: 360, time: 0.078875 s
+matrixSize: 900, time: 1.344900 s
+matrixSize: 1260, time: 4.470608 s
+matrixSize: 1800, time: 11.663387 s
+matrixSize: 2520, time: 36.077280 s
+matrixSize: 2700, time: 42.792603 s
+matrixSize: 3096, time: 67.404823 s
+Benchmark finished. OVERALL TIME: 163.833350 s
+
+
+
+
+
+
+
+SERIAL ALGORITHM
+=== Arguments ===
+[1]      benchmark
+=================
+matrixSize: 36, time: 0.000254 s
+matrixSize: 360, time: 0.300024 s
+matrixSize: 900, time: 6.397456 s
+matrixSize: 1260, time: 16.236839 s
+matrixSize: 1800, time: 42.430489 s
+matrixSize: 2520, time: 131.991471 s
+matrixSize: 2700, time: 198.129956 s
+matrixSize: 3096, time: 253.862715 s
+Benchmark finished. OVERALL TIME: 649.349204 s

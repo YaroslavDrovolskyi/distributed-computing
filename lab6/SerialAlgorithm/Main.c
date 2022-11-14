@@ -6,6 +6,7 @@
 
 void initProcessMemory(double** matrixA, double** matrixB, double** matrixC, int size);
 void freeProcessMemory(double* matrixA, double* matrixB, double* matrixC);
+void benchmark();
 void test(int numberOfIterations, int matrixSize);
 
 int main(int argc, char** argv) {
@@ -20,8 +21,7 @@ int main(int argc, char** argv) {
 	srand((unsigned)clock());
 
 	if (strcmp("benchmark", argv[1]) == 0) {
-		printf("Benchmark started!\n");
-		// need to implement benchmark
+		benchmark();
 	}
 	else if (strcmp("test", argv[1]) == 0) {
 		test(atoi(argv[2]), atoi(argv[3]));
@@ -51,6 +51,30 @@ void test(int numberOfIterations, int matrixSize) {
 	if (numberOfIterations > 0) {
 		printf("AVERAGE TIME: %f s\n", overallTime / numberOfIterations);
 	}
+}
+
+void benchmark() {
+	const int NUMBER_OF_ITERATIONS = 8;
+	int sizes[8] = { 36, 360, 900, 1260, 1800, 2520, 2700, 3096 };
+
+	double* matrixA;
+	double* matrixB;
+	double* matrixC;
+	double overallTime = 0;
+
+	for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
+		struct timespec start, finish;
+		initProcessMemory(&matrixA, &matrixB, &matrixC, sizes[i]);
+		timespec_get(&start, TIME_UTC);
+		multiplyMatricesBySerialAlgorithm(matrixA, matrixB, matrixC, sizes[i]);
+		timespec_get(&finish, TIME_UTC);
+		double duration = (finish.tv_sec - start.tv_sec) +
+			(double)(finish.tv_nsec - start.tv_nsec) / 1e9; // duration in seconds
+		overallTime += duration;
+		printf("matrixSize: %d, time: %f s\n", sizes[i], duration);
+		freeProcessMemory(matrixA, matrixB, matrixC);
+	}
+	printf("Benchmark finished. OVERALL TIME: %f s", overallTime);
 }
 
 // Allocate memory and initialize elements of matrixC by zeros
