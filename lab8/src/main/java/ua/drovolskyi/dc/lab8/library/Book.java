@@ -1,6 +1,8 @@
 package ua.drovolskyi.dc.lab8.library;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private long isbn;
     private String title;
     private int year;

@@ -11,10 +11,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Library {
+public class Library implements Serializable {
     private ArrayList<Author> authors = new ArrayList<>(); // replace by hashmap?
     private ArrayList<Book> books = new ArrayList<>();
 

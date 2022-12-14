@@ -1,6 +1,8 @@
 package ua.drovolskyi.dc.lab8.library;
 
-public class Author {
+import java.io.Serializable;
+
+public class Author implements Serializable {
     private long id;
     private String name;
 
