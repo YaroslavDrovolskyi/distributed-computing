@@ -112,7 +112,8 @@ public class LibraryDB {
                         result.getString("title"),
                         result.getInt("year"),
                         result.getInt("number_of_pages"),
-                        new Author(result.getLong("id_author"), "")
+                        new Author(result.getLong("id_author"),
+                                getAuthorById(result.getLong("id_author")).getName())
                 );
             }
         } catch(SQLException e){
@@ -200,11 +201,16 @@ public class LibraryDB {
                                 result.getString("title"),
                                 result.getInt("year"),
                                 result.getInt("number_of_pages"),
-                                new Author(result.getLong("id_author"), ""))
-                );
+                                new Author(result.getLong("id_author"), "")
+                ));
             }
         } catch(SQLException e){
             throw new RuntimeException(e);
+        }
+
+        // fill name of authors
+        for (Book book : books){
+            book.setAuthor(getAuthorById(book.getAuthor().getId()));
         }
 
         return books;
@@ -219,15 +225,21 @@ public class LibraryDB {
             while(result.next()){
                 books.add(
                         new Book(result.getLong("id"),
-                        result.getString("title"),
-                        result.getInt("year"),
-                        result.getInt("number_of_pages"),
-                        new Author(result.getLong("id_author"), ""))
-                );
+                                result.getString("title"),
+                                result.getInt("year"),
+                                result.getInt("number_of_pages"),
+                                new Author(result.getLong("id_author"), "")
+                ));
             }
         } catch(SQLException e){
             throw new RuntimeException(e);
         }
+
+        // fill name of authors
+        for (Book book : books){
+            book.setAuthor(getAuthorById(book.getAuthor().getId()));
+        }
+
 
         return books;
     }

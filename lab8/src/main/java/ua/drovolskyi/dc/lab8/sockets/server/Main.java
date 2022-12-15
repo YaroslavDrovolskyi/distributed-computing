@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws SQLException, IOException {
         Server server = new Server(50000);
         server.start();
-
+        System.out.println("Server finished");
 
     }
 }

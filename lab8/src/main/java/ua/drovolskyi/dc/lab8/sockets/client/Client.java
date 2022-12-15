@@ -30,7 +30,7 @@ public class Client {
         outputStream.flush();
 
         int returnCode = inputStream.readInt();
-        System.out.println("Command executed, return code = " + returnCode);
+//        System.out.println("Command executed, return code = " + returnCode);
 
         if(returnCode == 1){
             return inputStream.readBoolean();
@@ -89,7 +89,7 @@ public class Client {
         outputStream.writeInt(5);
         outputStream.writeInt(1);
         outputStream.writeLong(isbn);
-        outputStream.writeObject(title);
+        outputStream.writeUTF(title);
         outputStream.flush();
 
         int returnCode = inputStream.readInt();
