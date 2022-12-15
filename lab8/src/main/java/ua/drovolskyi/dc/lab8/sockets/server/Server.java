@@ -28,8 +28,7 @@ public class Server {
 
         // accept new clients, starts handler in new thread for each new client
         while(true){
-            Socket socket = null;
-            socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
             new Thread(new ClientHandlerThread(socket, db, dbLock)).start();
         }
     }
