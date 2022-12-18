@@ -26,7 +26,7 @@ public class Server {
         channel = connection.createChannel();
 
         channel.queueDeclare(QUEUE_NAME, true, false, false,null);
-        channel.queuePurge(QUEUE_NAME);
+//        channel.queuePurge(QUEUE_NAME);
 
         channel.basicQos(1);
 
@@ -53,7 +53,7 @@ public class Server {
 
         @Override
         public void handle(String s, Delivery delivery) throws IOException {
-            AMQP.BasicProperties replyProperties = new AMQP.BasicProperties
+            AMQP.BasicProperties responseProperties = new AMQP.BasicProperties
                     .Builder()
                     .correlationId(delivery.getProperties().getCorrelationId())
                     .build();
@@ -106,10 +106,10 @@ public class Server {
                 }
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
-            } finally{ // send a response
+            } finally{
                 channel.basicPublish("", delivery.getProperties().getReplyTo(),
-                        replyProperties, byteArrayOutputStream.toByteArray());
-                channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
+                        responseProperties, byteArrayOutputStream.toByteArray()); // send a response
+                channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false); // acknowledge request message
             }
         }
 
