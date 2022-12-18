@@ -89,5 +89,7 @@ public class Main {
         // get all authors
         System.out.println("\nGet all authors: ");
         System.out.println(client.getAllAuthors());
+
+        client.close();
     }
 }
