@@ -69,7 +69,7 @@ public class Server {
 
             // write response in output stream
             int command = inputStream.readInt();
-//            System.out.println("Got new command: " + command + " from client " + clientSocket);
+            System.out.println("Got new command: " + command /*+ " from client " + clientSocket*/);
             try {
                 switch (command) {
                     case 1:
@@ -102,6 +102,7 @@ public class Server {
                     default:
                         // write about unknown command
                         outputStream.writeInt(-1);
+                        outputStream.flush();
                         break;
                 }
             } catch (ClassNotFoundException e) {
@@ -121,6 +122,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeBoolean(result);
+            outputStream.flush();
         }
 
         private void deleteAuthor(ObjectInputStream inputStream, ObjectOutputStream outputStream)
@@ -132,6 +134,8 @@ public class Server {
                 outputStream.writeBoolean(result);
             } catch(RuntimeException e){
                 outputStream.writeInt(-1);
+            } finally {
+                outputStream.flush();
             }
         }
 
@@ -143,6 +147,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeBoolean(result);
+            outputStream.flush();
         }
 
         private void deleteBook(ObjectInputStream inputStream, ObjectOutputStream outputStream)
@@ -153,6 +158,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeBoolean(result);
+            outputStream.flush();
         }
 
         private void editBook(ObjectInputStream inputStream, ObjectOutputStream outputStream)
@@ -180,11 +186,13 @@ public class Server {
                     break;
                 default:
                     outputStream.writeInt(-1);
+                    outputStream.flush();
                     return;
             }
 
             outputStream.writeInt(1);
             outputStream.writeBoolean(result);
+            outputStream.flush();
         }
 
         private void countBooks(ObjectOutputStream outputStream)
@@ -193,6 +201,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeInt(numberOfBooks);
+            outputStream.flush();
         }
 
         private void getAllBooks(ObjectOutputStream outputStream)
@@ -201,6 +210,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeObject(books);
+            outputStream.flush();
         }
 
         private void getAllBooksFromAuthor(ObjectInputStream inputStream, ObjectOutputStream outputStream)
@@ -211,6 +221,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeObject(books);
+            outputStream.flush();
         }
 
         private void getAllAuthors(ObjectOutputStream outputStream)
@@ -219,6 +230,7 @@ public class Server {
 
             outputStream.writeInt(1);
             outputStream.writeObject(authors);
+            outputStream.flush();
         }
     }
 }
