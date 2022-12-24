@@ -45,4 +45,14 @@
     <servlet-name>DeleteItemServlet</servlet-name>
     <url-pattern>/DeleteItemServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditItemServlet</display-name>
+    <servlet-name>EditItemServlet</servlet-name>
+    <servlet-class>ua.drovolskyi.dc.lab9.library.servlets.EditItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditItemServlet</servlet-name>
+    <url-pattern>/EditItemServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

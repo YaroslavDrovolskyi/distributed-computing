@@ -69,7 +69,7 @@ public class CreateAuthorServlet extends HttpServlet {
 	    	
 	    	if(result) { // OK
 	    		request.setAttribute("isSuccess", true);	
-	    		System.out.println("Created success");
+	    		System.out.println("Created author successfully");
 	    	} 
 	    	else { // incorrect ID
 	    		request.setAttribute("isSuccess", false);

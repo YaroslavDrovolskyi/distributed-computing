@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create author</title>
+<title>Create book</title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
 
 
 <div class="container mt-5">
-<h2 class="text-center">Create author</h2>
+<h2 class="text-center">Create book</h2>
 <%
 if(request.getAttribute("isSuccess") != null){
 	boolean isSuccess = (Boolean) request.getAttribute("isSuccess");

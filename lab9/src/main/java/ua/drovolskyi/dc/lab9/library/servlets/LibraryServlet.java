@@ -63,17 +63,6 @@ public class LibraryServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String submit = request.getParameter("submitManageItem");
-		if(submit != null) {
-			if(submit.equals("submitEdit")) {
-				forwardToPage("/library/editItem", request, response);
-			}
-			else if(submit.equals("submitDelete")) {
-				forwardToPage("/library/deleteItem", request, response);
-			}
-			return;
-		}
-		
 		// display all authors and books
     	readLock.lock();
     	request.setAttribute("authorsList", db.getAllAuthors());
@@ -81,49 +70,6 @@ public class LibraryServlet extends HttpServlet {
     	readLock.unlock();
     	
     	forwardToPage("/jsp/library.jsp", request, response);
-		
-		
-		/*
-        if (request.getParameter("manageAuthorWithId") != null){
-        	long id = Integer.valueOf(request.getParameter("manageAuthorWithId"));
-        	String submit = request.getParameter("submitManageItem");
-            switch (submit) {           
-            case "submitEdit":
-            	System.out.println("Edit author with ID: " + id);
-            	//// need to add forwarding to editServlet
-                break;           
-            case "submitDelete":
-            	System.out.println("Delete author with ID: " + id);
-          
-            	writeLock.lock();
-            	boolean result = db.deleteAuthor(id);
-            	writeLock.unlock();
-            	
-            	
-                break;
-            }
-        }
-        else if (request.getParameter("manageBookWithISBN") != null){
-        	long isbn = Integer.valueOf(request.getParameter("manageBookWithISBN"));
-        	String submit = request.getParameter("submitManageItem");
-            switch (submit) {           
-            case "submitEdit":
-            	System.out.println("Edit book with ISBN: " + isbn);
-                break;           
-            case "submitDelete":
-            	System.out.println("Delete book with IDBN: " + isbn);
-            	// Need to add forwarding to jsp that will show status of done operation )
-            	writeLock.lock();
-            	boolean result = db.deleteBook(isbn);
-            	writeLock.unlock();
-                break;
-            }
-        }
-        */
-//        else{
-        	
-        	
-//        }
 	}
 	
 	

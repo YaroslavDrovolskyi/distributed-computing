@@ -48,39 +48,37 @@ public class DeleteItemServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("manageAuthorWithId") != null){
-        	long id = Long.valueOf(request.getParameter("manageAuthorWithId"));
-        	System.out.println("Delete author with ID: " + id);
-      
-        	writeLock.lock();
-        	boolean result = db.deleteAuthor(id);
-        	writeLock.unlock();
-        	
-        	request.setAttribute("isSuccess", result);
-        	request.setAttribute("item", "author");
-        	getServletContext().getRequestDispatcher("/jsp/deleteItem.jsp").forward(request, response);
+		if (request.getParameter("requestDeleteItem") != null){
+			String action = request.getParameter("requestDeleteItem");
+			switch(action) {
+			case "deleteAuthor":
+				long id = Long.valueOf(request.getParameter("authorId"));
+	        	System.out.println("Delete author with ID: " + id);
+	      
+	        	boolean result = db.deleteAuthor(id);
+	        	
+	        	request.setAttribute("isSuccess", result);
+	        	request.setAttribute("item", "author");
+				break;
+			case "deleteBook":
+				long isbn = Long.valueOf(request.getParameter("bookISBN"));
+	        	System.out.println("Delete book with ISBN: " + isbn);
+	        			
+	        	result = db.deleteBook(isbn);
+	        	
+	        	request.setAttribute("isSuccess", result);
+	        	request.setAttribute("item", "book");
+				break;
+			}
+			getServletContext().getRequestDispatcher("/jsp/deleteItem.jsp").forward(request, response);
         }
-        else if (request.getParameter("manageBookWithISBN") != null){
-        	long isbn = Long.valueOf(request.getParameter("manageBookWithISBN"));
-        	System.out.println("Delete book with IDBN: " + isbn);
-        			
-        	writeLock.lock();
-        	boolean result = db.deleteBook(isbn);
-        	writeLock.unlock();
-        	
-        	request.setAttribute("isSuccess", result);
-        	request.setAttribute("item", "book");
-        	getServletContext().getRequestDispatcher("/jsp/deleteItem.jsp").forward(request, response);
-        }
-        else {
-        	// incorrect addressing to this page
-        	getServletContext().getRequestDispatcher("/library").forward(request, response);
+        else { // incorrect addressing to this page
+        	response.sendRedirect("/library");
         }
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
