@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ua.drovolskyi.dc.lab9.library.Author;
 import ua.drovolskyi.dc.lab9.library.Book;
 import ua.drovolskyi.dc.lab9.library.LibraryDB;
+import ua.drovolskyi.dc.lab9.library.SynchronizedLibraryDB;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,24 +26,17 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 @WebServlet("/library")
 public class LibraryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private LibraryDB db;
-	private final Lock readLock;
-	private final Lock writeLock;
+	private SynchronizedLibraryDB db;
 	
 	public LibraryServlet() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			db = new LibraryDB();
+			db = new SynchronizedLibraryDB();
 		} catch (FileNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		ReadWriteLock lock = new ReentrantReadWriteLock();
-		writeLock = lock.writeLock();
-		readLock = lock.readLock();	
 	}
        
 	public void init(ServletConfig config) throws ServletException {
@@ -64,11 +58,8 @@ public class LibraryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// display all authors and books
-    	readLock.lock();
     	request.setAttribute("authorsList", db.getAllAuthors());
     	request.setAttribute("booksList", db.getAllBooks());
-    	readLock.unlock();
-    	
     	forwardToPage("/jsp/library.jsp", request, response);
 	}
 	
@@ -83,9 +74,3 @@ public class LibraryServlet extends HttpServlet {
 	
 
 }
-
-// action in <form> is name of servlet-handler
-// we need re-address from servlet to .jsp file
-/*
-	We can do forward() only one time (it is forward request to some .jsp)
-*/

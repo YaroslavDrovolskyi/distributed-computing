@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.drovolskyi.dc.lab9.library.LibraryDB;
+import ua.drovolskyi.dc.lab9.library.SynchronizedLibraryDB;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,27 +18,19 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @WebServlet("/library/createAuthor")
 public class CreateAuthorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private LibraryDB db;  
-    private final Lock writeLock;
-    private final Lock readLock;
+    private SynchronizedLibraryDB db;
     
     public CreateAuthorServlet() {
         super();
         
         try {
         	Class.forName("com.mysql.jdbc.Driver");
-			db = new LibraryDB();
+			db = new SynchronizedLibraryDB();
 		} catch (FileNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-        ReadWriteLock lock = new ReentrantReadWriteLock();
-        writeLock = lock.writeLock();
-        readLock = lock.readLock();
     }
     
     public void destroy() {
@@ -48,9 +41,6 @@ public class CreateAuthorServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/jsp/createAuthor.jsp").forward(request, response);
 	}
@@ -63,9 +53,7 @@ public class CreateAuthorServlet extends HttpServlet {
 	    	long id = Long.valueOf(request.getParameter("authorId")); // must be correct
 	    	String name = request.getParameter("authorName");
 	    	
-	    	writeLock.lock();
 	    	boolean result = db.addAuthor(id, name.trim());
-	    	writeLock.unlock();
 	    	
 	    	if(result) { // OK
 	    		request.setAttribute("isSuccess", true);	

@@ -7,7 +7,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <head>
 <meta charset="UTF-8">
-<title>Deleted <%=(String) request.getAttribute("item")%></title>
+<title>Deleted ${requestScope.item} </title>
 </head>
 <body>
 	<div class="container mt-5">
