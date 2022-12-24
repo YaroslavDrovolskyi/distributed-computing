@@ -45,7 +45,7 @@ if(request.getAttribute("isSuccess") != null){
         
         <p class="mb-1 mt-3">Title:</p>
         <input type="text" name="bookTitle" id="bookTitle" class="form-control" required="true" 
-                 placeholder="Author name" pattern="[\s|\S]*[\w]+[\s|\S]*"/>   
+                 placeholder="Book title" pattern="[\s|\S]*[\w]+[\s|\S]*"/>   
                  
 		<p class="mb-1 mt-3">Publishing year:</p>
 		

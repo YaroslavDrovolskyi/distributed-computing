@@ -59,17 +59,41 @@ public class LibraryServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = null;// = req.getParameter("searchAction");
-        if (action!=null){
-            switch (action) {           
-            case "searchById":
-//                searchEmployeeById(req, resp);
+        if (request.getParameter("manageAuthorWithId") != null){
+        	long id = Integer.valueOf(request.getParameter("manageAuthorWithId"));
+        	String submit = request.getParameter("submit");
+            switch (submit) {           
+            case "submitEdit":
+            	System.out.println("Edit author with ID: " + id);
+            	//// need to add forwarding to editServlet
                 break;           
-            case "searchByName":
-//                searchEmployeeByName(req, resp);
+            case "submitDelete":
+            	System.out.println("Delete author with ID: " + id);
+            	// Need to add forwarding to jsp that will show status of done operation )
+            	writeLock.lock();
+            	db.deleteAuthor(id);
+            	writeLock.unlock();
                 break;
             }
-        }else{
+        }
+        else if (request.getParameter("manageBookWithISBN") != null){
+        	System.out.println("Manage book");
+        	long isbn = Integer.valueOf(request.getParameter("manageBookWithISBN"));
+        	String submit = request.getParameter("submit");
+            switch (submit) {           
+            case "submitEdit":
+            	System.out.println("Edit book with ISBN: " + isbn);
+                break;           
+            case "submitDelete":
+            	System.out.println("Delete book with IDBN: " + isbn);
+            	// Need to add forwarding to jsp that will show status of done operation )
+            	writeLock.lock();
+            	db.deleteBook(isbn);
+            	writeLock.unlock();
+                break;
+            }
+        }
+//        else{
         	
         	// display all authors and books
         	readLock.lock();
@@ -78,7 +102,7 @@ public class LibraryServlet extends HttpServlet {
         	readLock.unlock();
         	
         	forwardToPage("/jsp/library.jsp", request, response);
-        }
+//        }
 	}
 	
 	

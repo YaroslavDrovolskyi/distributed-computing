@@ -6,6 +6,7 @@
     
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <html>
 <head>
 <meta charset="UTF-8">
@@ -26,12 +27,28 @@
                   <tr>
                       <td>ID</td>
                       <td>Name</td>
+                      <td></td>
+                      <td></td>
                   </tr>
               </thead>
               <c:forEach var="author" items="${authorsList}">
                   <tr>
                       <td>${author.id}</td>
-                      <td>${author.name}</td>          
+                      <td>${author.name}</td>
+                      <form action="<%=request.getContextPath()%>/library" method="POST" id="manageAuthor" role="form" >
+                     	  <input type="hidden" id="manageAuthorWithId" name="manageAuthorWithId" value="${author.id}"}/>
+	                      <td>
+	                      <button type="submit" name="submit" value="submitEdit" class="btn bg-warning text-white" >
+	                      <i class="fa fa-pencil"></i>
+	                      </button>
+	                      </td>
+	                      
+	                      <td>
+	                      <button type="submit" name="submit" value="submitDelete" class="btn bg-danger text-white" >
+	                      <i class="fa fa-trash"></i>
+	                      </button>
+	                      </td>
+	                  </form>
                   </tr>
               </c:forEach>               
           </table>  
@@ -64,6 +81,8 @@
                       <td>Publishing year</td>
                       <td>Number of pages</td>
                       <td>Author ID</td>
+                      <td></td>
+                      <td></td>
                   </tr>
               </thead>
               <c:forEach var="book" items="${booksList}">
@@ -72,7 +91,23 @@
                       <td>${book.title}</td>          
                       <td>${book.year}</td>          
                       <td>${book.numberPages}</td>          
-                      <td>${book.author.id}</td>          
+                      <td>${book.author.id}</td> 
+                      
+                      
+                      <form action="<%=request.getContextPath()%>/library" method="POST" id="manageBook" role="form" >
+                     	  <input type="hidden" id="manageBookWithISBN" name="manageBookWithISBN" value="${book.ISBN}"}/>
+	                      <td>
+	                      <button type="submit" name="submit" value="submitEdit" class="btn bg-warning text-white" >
+	                      <i class="fa fa-pencil"></i>
+	                      </button>
+	                      </td>
+	                      
+	                      <td>
+	                      <button type="submit" name="submit" value="submitDelete" class="btn bg-danger text-white" >
+	                      <i class="fa fa-trash"></i>
+	                      </button>
+	                      </td>
+	                  </form>       
                   </tr>
               </c:forEach>               
           </table>  
