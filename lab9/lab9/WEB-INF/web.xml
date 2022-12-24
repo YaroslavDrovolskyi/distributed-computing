@@ -35,4 +35,14 @@
     <servlet-name>CreateBookServlet</servlet-name>
     <url-pattern>/CreateBookServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteItemServlet</display-name>
+    <servlet-name>DeleteItemServlet</servlet-name>
+    <servlet-class>ua.drovolskyi.dc.lab9.library.servlets.DeleteItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteItemServlet</servlet-name>
+    <url-pattern>/DeleteItemServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

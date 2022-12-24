@@ -56,12 +56,37 @@ public class LibraryServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String submit = request.getParameter("submitManageItem");
+		if(submit != null) {
+			if(submit.equals("submitEdit")) {
+				forwardToPage("/library/editItem", request, response);
+			}
+			else if(submit.equals("submitDelete")) {
+				forwardToPage("/library/deleteItem", request, response);
+			}
+			return;
+		}
+		
+		// display all authors and books
+    	readLock.lock();
+    	request.setAttribute("authorsList", db.getAllAuthors());
+    	request.setAttribute("booksList", db.getAllBooks());
+    	readLock.unlock();
+    	
+    	forwardToPage("/jsp/library.jsp", request, response);
+		
+		
+		/*
         if (request.getParameter("manageAuthorWithId") != null){
         	long id = Integer.valueOf(request.getParameter("manageAuthorWithId"));
-        	String submit = request.getParameter("submit");
+        	String submit = request.getParameter("submitManageItem");
             switch (submit) {           
             case "submitEdit":
             	System.out.println("Edit author with ID: " + id);
@@ -69,17 +94,18 @@ public class LibraryServlet extends HttpServlet {
                 break;           
             case "submitDelete":
             	System.out.println("Delete author with ID: " + id);
-            	// Need to add forwarding to jsp that will show status of done operation )
+          
             	writeLock.lock();
-            	db.deleteAuthor(id);
+            	boolean result = db.deleteAuthor(id);
             	writeLock.unlock();
+            	
+            	
                 break;
             }
         }
         else if (request.getParameter("manageBookWithISBN") != null){
-        	System.out.println("Manage book");
         	long isbn = Integer.valueOf(request.getParameter("manageBookWithISBN"));
-        	String submit = request.getParameter("submit");
+        	String submit = request.getParameter("submitManageItem");
             switch (submit) {           
             case "submitEdit":
             	System.out.println("Edit book with ISBN: " + isbn);
@@ -88,38 +114,27 @@ public class LibraryServlet extends HttpServlet {
             	System.out.println("Delete book with IDBN: " + isbn);
             	// Need to add forwarding to jsp that will show status of done operation )
             	writeLock.lock();
-            	db.deleteBook(isbn);
+            	boolean result = db.deleteBook(isbn);
             	writeLock.unlock();
                 break;
             }
         }
+        */
 //        else{
         	
-        	// display all authors and books
-        	readLock.lock();
-        	request.setAttribute("authorsList", db.getAllAuthors());
-        	request.setAttribute("booksList", db.getAllBooks());
-        	readLock.unlock();
         	
-        	forwardToPage("/jsp/library.jsp", request, response);
 //        }
 	}
 	
 	
-	private void forwardToPage(String nextJSP, HttpServletRequest req, HttpServletResponse resp)
+	private void forwardToPage(String nextURL, HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextJSP);
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(nextURL);
         dispatcher.forward(req, resp);
-        System.out.println("Forwarded to jsp page");
+        System.out.println("Forwarded to: " + nextURL);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	
 
 }
 

@@ -39,6 +39,14 @@ public class CreateAuthorServlet extends HttpServlet {
         writeLock = lock.writeLock();
         readLock = lock.readLock();
     }
+    
+    public void destroy() {
+		try {
+			db.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

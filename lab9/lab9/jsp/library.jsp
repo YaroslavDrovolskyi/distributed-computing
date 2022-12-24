@@ -38,13 +38,13 @@
                       <form action="<%=request.getContextPath()%>/library" method="POST" id="manageAuthor" role="form" >
                      	  <input type="hidden" id="manageAuthorWithId" name="manageAuthorWithId" value="${author.id}"}/>
 	                      <td>
-	                      <button type="submit" name="submit" value="submitEdit" class="btn bg-warning text-white" >
+	                      <button type="submit" name="submitManageItem" value="submitEdit" class="btn bg-warning text-white" >
 	                      <i class="fa fa-pencil"></i>
 	                      </button>
 	                      </td>
 	                      
 	                      <td>
-	                      <button type="submit" name="submit" value="submitDelete" class="btn bg-danger text-white" >
+	                      <button type="submit" name="submitManageItem" value="submitDelete" class="btn bg-danger text-white" >
 	                      <i class="fa fa-trash"></i>
 	                      </button>
 	                      </td>
@@ -97,13 +97,13 @@
                       <form action="<%=request.getContextPath()%>/library" method="POST" id="manageBook" role="form" >
                      	  <input type="hidden" id="manageBookWithISBN" name="manageBookWithISBN" value="${book.ISBN}"}/>
 	                      <td>
-	                      <button type="submit" name="submit" value="submitEdit" class="btn bg-warning text-white" >
+	                      <button type="submit" name="submitManageItem" value="submitEdit" class="btn bg-warning text-white" >
 	                      <i class="fa fa-pencil"></i>
 	                      </button>
 	                      </td>
 	                      
 	                      <td>
-	                      <button type="submit" name="submit" value="submitDelete" class="btn bg-danger text-white" >
+	                      <button type="submit" name="submitManageItem" value="submitDelete" class="btn bg-danger text-white" >
 	                      <i class="fa fa-trash"></i>
 	                      </button>
 	                      </td>
