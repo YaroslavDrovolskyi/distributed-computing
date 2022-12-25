@@ -44,7 +44,7 @@ public class EditItemServlet extends HttpServlet {
 	}
 
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doGet of EditItemServlet");
 		if(request.getParameter("requestEditItem")!= null) { // request came from /library page
 			System.out.println("Requested for edit item");
@@ -110,9 +110,9 @@ public class EditItemServlet extends HttpServlet {
 	}
 
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		doPost(request, response);
 	}
 
 }
